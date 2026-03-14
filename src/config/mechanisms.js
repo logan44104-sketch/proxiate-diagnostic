@@ -650,6 +650,9 @@ function pickVariant(mechanismKey, profile) {
       if (q7 && q7.includes("viral")) return variants.post_viral;
       if (conditions.has("autoimmune")) return variants.autoimmune;
       break;
+
+    default:
+      break;
   }
 
   return null;
