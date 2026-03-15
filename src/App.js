@@ -738,6 +738,8 @@ function App() {
   const [result, setResult] = useState(null);
   const [caveatedResult, setCaveatedResult] = useState(false);
   const [legendOpen, setLegendOpen] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailStatus, setEmailStatus] = useState("idle"); // idle | submitting | success | error
 
   const current = QUESTIONS[currentIndex];
 
@@ -851,6 +853,32 @@ function App() {
     setCurrentIndex(0);
     setResult(null);
     setCaveatedResult(false);
+    setEmailInput("");
+    setEmailStatus("idle");
+  };
+
+  const handleEmailSubmit = async (primaryMechanism) => {
+    const apiKey = process.env.REACT_APP_MAILERLITE_API_KEY;
+    const tag = `bucket_${primaryMechanism}`;
+    setEmailStatus("submitting");
+    try {
+      const res = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-MailerLite-ApiKey": apiKey,
+        },
+        body: JSON.stringify({
+          email: emailInput,
+          groups: [],
+          fields: { tag },
+        }),
+      });
+      if (!res.ok) throw new Error("non-2xx");
+      setEmailStatus("success");
+    } catch {
+      setEmailStatus("error");
+    }
   };
 
   return (
@@ -1137,6 +1165,70 @@ function App() {
                         <div style={{ border: "1px solid #eee", borderRadius: 8, padding: 16, marginBottom: 16 }}>
                           <h4>Secondary pattern to watch: {secondary.shortName}</h4>
                           <p>{secondary.explanation}</p>
+                        </div>
+                      )}
+
+                      {/* ── EMAIL CAPTURE ── */}
+                      {primaryKey && (
+                        <div style={{ border: "1px solid #2a2520", borderRadius: 8, padding: "20px 24px", marginBottom: 16, background: "#110f0c" }}>
+                          {emailStatus === "success" ? (
+                            <p style={{ color: "#b0a89e", margin: 0 }}>Your plan is on its way.</p>
+                          ) : (
+                            <>
+                              <h3 style={{ color: "#f0ebe3", marginTop: 0, marginBottom: 6, fontSize: "17px" }}>
+                                Your personalised action plan is ready
+                              </h3>
+                              <p style={{ color: "#8a8278", margin: "0 0 16px", fontSize: "14px" }}>
+                                Specific fixes for this root cause — nothing else.
+                              </p>
+                              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                                <input
+                                  type="email"
+                                  placeholder="Your email"
+                                  value={emailInput}
+                                  onChange={e => setEmailInput(e.target.value)}
+                                  onKeyDown={e => e.key === "Enter" && emailInput && handleEmailSubmit(result.primaryMechanism)}
+                                  style={{
+                                    flex: 1,
+                                    minWidth: 180,
+                                    background: "#1e1a14",
+                                    border: "1px solid #3a3530",
+                                    borderRadius: 6,
+                                    padding: "10px 14px",
+                                    color: "#f0ebe3",
+                                    fontSize: "14px",
+                                    fontFamily: "inherit",
+                                    outline: "none",
+                                  }}
+                                />
+                                <button
+                                  onClick={() => handleEmailSubmit(result.primaryMechanism)}
+                                  disabled={!emailInput || emailStatus === "submitting"}
+                                  style={{
+                                    background: emailInput ? "#C4512A" : "#3a2518",
+                                    color: "#f0ebe3",
+                                    border: "none",
+                                    borderRadius: 6,
+                                    padding: "10px 18px",
+                                    fontSize: "14px",
+                                    fontFamily: "inherit",
+                                    cursor: emailInput ? "pointer" : "not-allowed",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {emailStatus === "submitting" ? "Sending…" : "Send my plan →"}
+                                </button>
+                              </div>
+                              {emailStatus === "error" && (
+                                <p style={{ color: "#e57373", fontSize: "13px", marginTop: 10, marginBottom: 0 }}>
+                                  Something went wrong — try again.
+                                </p>
+                              )}
+                              <p style={{ color: "#4a4540", fontSize: "12px", marginTop: 10, marginBottom: 0 }}>
+                                No generic advice. No spam.
+                              </p>
+                            </>
+                          )}
                         </div>
                       )}
 
