@@ -858,20 +858,14 @@ function App() {
   };
 
   const handleEmailSubmit = async (primaryMechanism) => {
-    const apiKey = process.env.REACT_APP_MAILERLITE_API_KEY;
-    const tag = `bucket_${primaryMechanism}`;
     setEmailStatus("submitting");
     try {
-      const res = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
+      const res = await fetch("/api/subscribe", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-MailerLite-ApiKey": apiKey,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: emailInput,
-          groups: [],
-          fields: { tag },
+          bucket: `bucket_${primaryMechanism}`,
         }),
       });
       if (!res.ok) throw new Error("non-2xx");
