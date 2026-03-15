@@ -35,13 +35,15 @@ module.exports = async function handler(req, res) {
     // Step 2: Find or create a group named after the bucket
     const groupsRes = await fetch("https://api.mailerlite.com/api/v2/groups", { headers });
     const groupsBody = await groupsRes.json();
-    console.log("[subscribe] MailerLite groups fetch response", { status: groupsRes.status, body: groupsBody });
+    console.log("[subscribe] MailerLite groups full response", JSON.stringify(groupsBody));
 
     let groupId;
     const existingGroup = Array.isArray(groupsBody) && groupsBody.find(g => g.name === bucket);
+    console.log("[subscribe] matched group object", JSON.stringify(existingGroup || null));
+
     if (existingGroup) {
-      groupId = existingGroup.id;
-      console.log("[subscribe] using existing group", { groupId });
+      groupId = String(existingGroup.id);
+      console.log("[subscribe] using existing groupId", groupId, typeof existingGroup.id);
     } else {
       // Create the group
       const createRes = await fetch("https://api.mailerlite.com/api/v2/groups", {
@@ -50,13 +52,16 @@ module.exports = async function handler(req, res) {
         body: JSON.stringify({ name: bucket }),
       });
       const createBody = await createRes.json();
-      console.log("[subscribe] MailerLite group create response", { status: createRes.status, body: createBody });
+      console.log("[subscribe] MailerLite group create response", JSON.stringify(createBody));
 
       if (!createRes.ok) {
         return res.status(500).json({ error: createBody });
       }
-      groupId = createBody.id;
+      groupId = String(createBody.id);
+      console.log("[subscribe] created groupId", groupId, typeof createBody.id);
     }
+
+    console.log("[subscribe] add-to-group URL will be", `https://api.mailerlite.com/api/v2/groups/${groupId}/subscribers`);
 
     // Step 3: Add subscriber to the group
     const addRes = await fetch(
