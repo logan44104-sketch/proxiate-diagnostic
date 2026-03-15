@@ -13,70 +13,52 @@ module.exports = async function handler(req, res) {
   }
 
   const apiKey = process.env.REACT_APP_MAILERLITE_API_KEY;
+  const baseUrl = "https://connect.mailerlite.com/api";
   const headers = {
     "Content-Type": "application/json",
-    "X-MailerLite-ApiKey": apiKey,
+    "Authorization": `Bearer ${apiKey}`,
   };
 
   try {
-    // Step 1: Subscribe the email
-    const subRes = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ email }),
-    });
-    const subBody = await subRes.json();
-    console.log("[subscribe] MailerLite subscribe response", { status: subRes.status, body: subBody });
-
-    if (!subRes.ok) {
-      return res.status(500).json({ error: subBody });
-    }
-
-    // Step 2: Find or create a group named after the bucket
-    const groupsRes = await fetch("https://api.mailerlite.com/api/v2/groups", { headers });
+    // Step 1: Find or create the group
+    const groupsRes = await fetch(`${baseUrl}/groups`, { headers });
     const groupsBody = await groupsRes.json();
-    console.log("[subscribe] MailerLite groups full response", JSON.stringify(groupsBody));
+    console.log("[subscribe] groups response", JSON.stringify(groupsBody));
 
     let groupId;
-    const existingGroup = Array.isArray(groupsBody) && groupsBody.find(g => g.name === bucket);
-    console.log("[subscribe] matched group object", JSON.stringify(existingGroup || null));
+    const existingGroup = Array.isArray(groupsBody.data) && groupsBody.data.find(g => g.name === bucket);
+    console.log("[subscribe] matched group", JSON.stringify(existingGroup || null));
 
     if (existingGroup) {
       groupId = String(existingGroup.id);
-      console.log("[subscribe] using existing groupId", groupId, typeof existingGroup.id);
+      console.log("[subscribe] using existing groupId", groupId);
     } else {
-      // Create the group
-      const createRes = await fetch("https://api.mailerlite.com/api/v2/groups", {
+      const createRes = await fetch(`${baseUrl}/groups`, {
         method: "POST",
         headers,
         body: JSON.stringify({ name: bucket }),
       });
       const createBody = await createRes.json();
-      console.log("[subscribe] MailerLite group create response", JSON.stringify(createBody));
+      console.log("[subscribe] group create response", JSON.stringify(createBody));
 
       if (!createRes.ok) {
         return res.status(500).json({ error: createBody });
       }
-      groupId = String(createBody.id);
-      console.log("[subscribe] created groupId", groupId, typeof createBody.id);
+      groupId = String(createBody.data.id);
+      console.log("[subscribe] created groupId", groupId);
     }
 
-    console.log("[subscribe] add-to-group URL will be", `https://api.mailerlite.com/api/v2/groups/${groupId}/subscribers`);
+    // Step 2: Subscribe with group assigned in one call
+    const subRes = await fetch(`${baseUrl}/subscribers`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ email, groups: [groupId] }),
+    });
+    const subBody = await subRes.json();
+    console.log("[subscribe] subscribe response", { status: subRes.status, body: JSON.stringify(subBody) });
 
-    // Step 3: Add subscriber to the group
-    const addRes = await fetch(
-      `https://api.mailerlite.com/api/v2/groups/${groupId}/subscribers`,
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ email }),
-      }
-    );
-    const addBody = await addRes.json();
-    console.log("[subscribe] MailerLite add-to-group response", { status: addRes.status, body: addBody });
-
-    if (!addRes.ok) {
-      return res.status(500).json({ error: addBody });
+    if (!subRes.ok) {
+      return res.status(500).json({ error: subBody });
     }
 
     return res.status(200).json({ ok: true });
@@ -84,4 +66,4 @@ module.exports = async function handler(req, res) {
     console.error("[subscribe] unexpected error", { message: err.message, stack: err.stack });
     return res.status(500).json({ error: err.message });
   }
-}
+};
