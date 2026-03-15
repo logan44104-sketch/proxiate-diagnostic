@@ -859,14 +859,13 @@ function App() {
 
   const handleEmailSubmit = async (primaryMechanism) => {
     setEmailStatus("submitting");
+    const payload = { email: emailInput, bucket: `bucket_${primaryMechanism}` };
+    console.log("[subscribe] fetching", "/api/subscribe", payload);
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: emailInput,
-          bucket: `bucket_${primaryMechanism}`,
-        }),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("non-2xx");
       setEmailStatus("success");

@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   console.log("[subscribe] function called", { method: req.method });
 
   if (req.method !== "POST") {
@@ -33,16 +33,14 @@ export default async function handler(req, res) {
     }
 
     // Step 2: Find or create a group named after the bucket
-    const groupsRes = await fetch(
-      `https://api.mailerlite.com/api/v2/groups?filters[name]=${encodeURIComponent(bucket)}`,
-      { headers }
-    );
+    const groupsRes = await fetch("https://api.mailerlite.com/api/v2/groups", { headers });
     const groupsBody = await groupsRes.json();
     console.log("[subscribe] MailerLite groups fetch response", { status: groupsRes.status, body: groupsBody });
 
     let groupId;
-    if (Array.isArray(groupsBody) && groupsBody.length > 0) {
-      groupId = groupsBody[0].id;
+    const existingGroup = Array.isArray(groupsBody) && groupsBody.find(g => g.name === bucket);
+    if (existingGroup) {
+      groupId = existingGroup.id;
       console.log("[subscribe] using existing group", { groupId });
     } else {
       // Create the group
