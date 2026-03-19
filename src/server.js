@@ -26,7 +26,7 @@ const GROUP_IDS = {
 app.post("/api/subscribe", async (req, res) => {
   console.log("subscribe endpoint hit", req.body);
 
-  const { email, bucket, sex } = req.body;
+  const { email, bucket, sex, top_pattern, pattern_score, second_pattern } = req.body;
 
   const groups = [GROUP_IDS[bucket]].filter(Boolean);
 
@@ -43,7 +43,7 @@ app.post("/api/subscribe", async (req, res) => {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${MAILERLITE_API_KEY}`
       },
-      body: JSON.stringify({ email, groups })
+      body: JSON.stringify({ email, groups, fields: { top_pattern, pattern_score, second_pattern } })
     });
 
     if (!response.ok) {

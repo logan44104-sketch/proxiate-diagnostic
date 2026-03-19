@@ -869,7 +869,16 @@ function App() {
 
   const handleEmailSubmit = async (primaryMechanism) => {
     setEmailStatus("submitting");
-    const payload = { email: emailInput, bucket: `bucket_${primaryMechanism}`, sex: answers.sex };
+    const primaryScore = Math.min(result.scores?.[primaryMechanism] || 0, 100);
+    const secondPattern = result.topMechanisms?.[1] || null;
+    const payload = {
+      email: emailInput,
+      bucket: `bucket_${primaryMechanism}`,
+      sex: answers.sex,
+      top_pattern: primaryMechanism,
+      pattern_score: primaryScore,
+      second_pattern: secondPattern,
+    };
     console.log("[subscribe] fetching", "/api/subscribe", payload);
     try {
       const res = await fetch("/api/subscribe", {
@@ -965,7 +974,7 @@ function App() {
                 — that's not helpful, it's noise.
               </p>
               <p style={{ color: "var(--prox-muted)" }}>
-                What actually helps: talk to your midwife or GP. Sleep disruption in pregnancy is
+                What actually helps: talk to your midwife or your doctor. Sleep disruption in pregnancy is
                 extremely common and there are safe, evidence-based approaches they can guide you through.
               </p>
             </div>
@@ -1005,7 +1014,7 @@ function App() {
                     <strong>Important context:</strong> Based on your answers, one or more underlying
                     health conditions or caregiving demands are likely affecting your sleep. The pattern
                     below is a starting point — but we'd recommend discussing these results with your
-                    GP before acting on them.
+                    your doctor before acting on them.
                   </p>
                 </div>
               )}

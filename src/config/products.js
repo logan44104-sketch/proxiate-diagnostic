@@ -37,7 +37,7 @@ export const PRODUCTS = {
   hormonal: [
     {
       name: "Symptom tracking journal",
-      role: "Helps you track cycles, hot flashes, and sleep so your GP sees the full picture.",
+      role: "Helps you track cycles, hot flashes, and sleep so your doctor sees the full picture.",
       affiliateUrl: "https://example.com/hormonal-journal",
       disclaimer: "Used to support medical care, not replace hormone testing."
     }
@@ -72,7 +72,7 @@ export const PRODUCTS = {
       name: "Pacing planner",
       role: "Simple planner or app that helps you space out activity and avoid post‑exertional crashes.",
       affiliateUrl: "https://example.com/systemic-pacing",
-      disclaimer: "Discuss persistent fatigue with your GP or specialist."
+      disclaimer: "Discuss persistent fatigue with your doctor or specialist."
     }
   ],
 };
