@@ -867,6 +867,19 @@ function App() {
     setEmailStatus("idle");
   };
 
+  const MECHANISM_DISPLAY_NAMES = {
+    airway:      "Airway & breathing",
+    circadian:   "Circadian rhythm disruption",
+    duration:    "Insufficient sleep duration",
+    environment: "Sleep environment",
+    hormonal:    "Hormonal disruption",
+    mind_stress: "Stress & mental overload",
+    mood:        "Mood & sleep cycle",
+    movement:    "Physical disruption during sleep",
+    substances:  "Substance-related sleep disruption",
+    systemic:    "Systemic or nutritional factors",
+  };
+
   const handleEmailSubmit = async (primaryMechanism) => {
     setEmailStatus("submitting");
     const primaryScore = Math.min(result.scores?.[primaryMechanism] || 0, 100);
@@ -875,9 +888,9 @@ function App() {
       email: emailInput,
       bucket: `bucket_${primaryMechanism}`,
       sex: answers.sex,
-      top_pattern: primaryMechanism,
+      top_pattern: MECHANISM_DISPLAY_NAMES[primaryMechanism] || primaryMechanism,
       pattern_score: primaryScore,
-      second_pattern: secondPattern,
+      second_pattern: secondPattern ? (MECHANISM_DISPLAY_NAMES[secondPattern] || secondPattern) : null,
     };
     console.log("[subscribe] fetching", "/api/subscribe", payload);
     try {
