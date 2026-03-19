@@ -1,13 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400&family=DM+Serif+Display&display=swap');
+
+:root {
+  --prox-forest:  #1A3228;
+  --prox-stone:   #F5F2EB;
+  --prox-terra:   #C4512A;
+  --prox-bronze:  #9B7220;
+  --prox-pale:    #DEDAD1;
+  --prox-surface: #FAFAF7;
+  --prox-muted:   #5C6B5A;
+  --prox-body:    #4A5B48;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background: var(--prox-stone);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 400;
+  color: var(--prox-body);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--prox-forest);
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+p {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: var(--prox-body);
+  line-height: 1.65;
+}
+
+a {
+  color: var(--prox-terra);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--prox-forest);
+}
+
+code, .mono {
+  font-family: 'DM Mono', monospace;
+  font-weight: 400;
 }

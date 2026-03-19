@@ -30,6 +30,7 @@ function scoreNRSQuiz(a) {
 
   let sleep_restriction = false;
   const red_flags = [];
+  const flags = [];
 
   // ── Intake priors ──
   if (a.sex === 'Female') {
@@ -40,16 +41,21 @@ function scoreNRSQuiz(a) {
     scores.hormonal += 5;
   }
 
+  // Male hormonal pathway — low testosterone / andropause signal
+  if (a.sex === 'Male' && ['35–44', '45–54', '55–64', '65+'].includes(a.ageBand)) {
+    scores.hormonal += 4; // age-based prior for males 40+
+  }
+
   if (a.specialCase_caregiver === 'Yes — and they wake me most nights') {
     scores.environment += 25;
   }
 
   if (a.knownConditions?.apnea) {
-    scores.airway += 30;
+    scores.airway += 20;
   }
 
   if (a.knownConditions?.depressionAnxiety) {
-    scores.mind_stress += 20;
+    scores.mind_stress += 12;
   }
 
   if (a.knownConditions?.chronicPain) {
@@ -69,13 +75,13 @@ function scoreNRSQuiz(a) {
 
   // Known iron deficiency
   if (a.knownConditions?.ironDeficiency) {
-    scores.hormonal += 15;
+    scores.systemic += 15;
     scores.movement += 8; // RLS connection
   }
 
   // Known autoimmune condition
   if (a.knownConditions?.autoimmune) {
-    scores.systemic += 25;
+    scores.systemic += 18;
   }
 
   // Known PTSD
@@ -85,8 +91,7 @@ function scoreNRSQuiz(a) {
 
   // Known diabetes
   if (a.knownConditions?.diabetes) {
-    scores.hormonal += 10;
-    scores.systemic += 8;
+    scores.systemic += 12;
   }
 
   // Known reflux/GERD — airway and environment signal
@@ -112,29 +117,37 @@ function scoreNRSQuiz(a) {
     scores.circadian += 6;
   }
 
-  // ── q0a — severity / impact ──
-  if (a.q0a?.includes('Severely') || a.q0a?.includes('barely getting through')) {
-    scores.systemic += 8;
+  // ── q0a — severity multiplier ──
+  let severityMultiplier = 1.0;
+  const severityAnswer = a.q0a;
+  if (severityAnswer === "A little — I notice it but I push through most things fine") {
+    severityMultiplier = 0.85;
+  } else if (severityAnswer === "Moderately — it takes real effort to get through work or daily tasks") {
+    severityMultiplier = 1.0;
+  } else if (severityAnswer === "A lot — my performance, relationships, or mood have clearly suffered") {
+    severityMultiplier = 1.15;
+  } else if (severityAnswer === "Severely — I've had to cut back on work, cancel plans, or change how I live") {
+    severityMultiplier = 1.25;
+  } else if (severityAnswer === "I'm barely getting through each day") {
+    severityMultiplier = 1.35;
   }
 
   // ── q0c_fatigue_shape ──
   const fatigueShape = a.q0c_fatigue_shape;
   if (fatigueShape === 'I wake up exhausted and the first few hours are a real struggle — I only start to feel human approaching midday') {
     scores.circadian += 10;
-    scores.airway += 6;
+    scores.airway += 10;
   }
   if (fatigueShape === 'Mornings are okay, but I hit a wall by mid-afternoon and I\'m running on fumes for the rest of the day') {
     scores.substances += 6;
     scores.circadian += 6;
   }
   if (fatigueShape === 'I feel a flat, steady tiredness from waking to sleeping — I never really feel properly awake') {
-    scores.mood += 10;
-    scores.systemic += 8;
-    scores.hormonal += 6;
+    scores.mood += 14;
+    scores.systemic += 14;
   }
   if (fatigueShape === 'It\'s unpredictable — some hours I\'m okay, then my energy drops off a cliff without warning') {
-    scores.hormonal += 8;
-    scores.systemic += 6;
+    scores.systemic += 8;
   }
 
   // ── q2 — daytime dozing ──
@@ -174,7 +187,7 @@ function scoreNRSQuiz(a) {
   }
   if (latency === 'Less than 5 minutes') {
     // Very fast onset with NRS = strong airway or systemic signal
-    scores.airway += 6;
+    scores.airway += 8;
     scores.systemic += 4;
   }
 
@@ -207,7 +220,7 @@ function scoreNRSQuiz(a) {
   if (has('q10d_sleep_barriers', 'cantGetComfortable')) scores.movement += 8;
   if (has('q10d_sleep_barriers', 'tooHotOrCold')) {
     scores.environment += 8;
-    scores.hormonal += 4; // temperature dysregulation signal
+    if (a.sex === 'Female') scores.hormonal += 4; // temperature dysregulation signal
   }
   if (has('q10d_sleep_barriers', 'noise')) scores.environment += 8;
   if (has('q10d_sleep_barriers', 'screenHooked')) scores.substances += 6;
@@ -229,6 +242,11 @@ function scoreNRSQuiz(a) {
   if (waking === 'I wake very early (3–5 am) and can\'t get back to sleep at all') {
     scores.mood += 14;
     scores.mind_stress += 8;
+  }
+  if (waking === "It depends on the night — sometimes I'm fine, other times I'm awake for ages") {
+    scores.mind_stress += 6;
+    scores.substances += 4;
+    scores.hormonal += 4;
   }
 
   // ── q0b_wake_causes ──
@@ -267,7 +285,7 @@ function scoreNRSQuiz(a) {
     scores.airway += isFemale ? 4 : 7;
   }
   if (a.q3 === 'I sleep alone, so I\'m not sure') {
-    scores.airway += 3; // uncertainty bump — can't rule out
+    scores.airway += 5; // uncertainty bump — can't rule out
   }
 
   // ── q8 — airway symptom cluster ──
@@ -289,7 +307,7 @@ function scoreNRSQuiz(a) {
   if (a.q_apnea_treatment === 'I was diagnosed but haven\'t started treatment yet' ||
       a.q_apnea_treatment === 'I tried treatment but stopped') {
     // Force airway to dominate
-    scores.airway += 40;
+    scores.airway += 30;
   }
 
   // ── q12 circadian block ──
@@ -305,10 +323,10 @@ function scoreNRSQuiz(a) {
   if (freeNight === '30–60 minutes later') scores.circadian += 3;
 
   const chronotype = a.q12b_chronotype;
-  if (chronotype === 'Before 9:30 pm and awake before 5:30 am') scores.mood += 4;
-  if (chronotype === 'After 2 am and awake after 10 am or later') scores.circadian += 12;
-  if (chronotype === 'After 1 am and awake after 9 am') scores.circadian += 8;
-  if (chronotype === 'Around midnight and awake around 8 am') scores.circadian += 4;
+  if (chronotype === 'Asleep before 9:30 pm, awake before 5:30 am') scores.mood += 4;
+  if (chronotype === 'Asleep after 2 am, awake after 10 am or later') scores.circadian += 12;
+  if (chronotype === 'Asleep after 1 am, awake after 9 am') scores.circadian += 8;
+  if (chronotype === 'Asleep around midnight, awake around 8 am') scores.circadian += 4;
 
   // ── Late bedtime + early alarm cross-signal ──
   // Late bedtime + any alarm before 7:30am = confirmed sleep restriction
@@ -406,7 +424,7 @@ function scoreNRSQuiz(a) {
   if (has('q14_environment', 'screenInBed')) scores.substances += 6;
   if (has('q14_environment', 'roomTempWrong')) scores.environment += 10;
   if (has('q14_environment', 'noise')) scores.environment += 10;
-  if (has('q14_environment', 'kidsWaking')) scores.environment += 20;
+  if (has('q14_environment', 'kidsWaking')) scores.environment += 12;
   if (has('q14_environment', 'noWindDown')) {
     scores.mind_stress += 6;
     scores.substances += 4;
@@ -415,7 +433,6 @@ function scoreNRSQuiz(a) {
   // ── q11 — movement/pain/nocturia ──
   if (has('q11', 'legUrge')) {
     scores.movement += 14;
-    scores.hormonal += 6; // RLS linked to iron, which is hormonal/metabolic
   }
   if (has('q11', 'painWakes')) scores.movement += 14;
   if (has('q11', 'bruxism')) {
@@ -429,6 +446,10 @@ function scoreNRSQuiz(a) {
     const isOlderFemale = isFemale && ['45–54', '55–64'].includes(a.ageBand);
     scores.movement += isOlderMale ? 10 : 8;
     scores.airway += isOlderFemale ? 8 : 5; // nocturia more diagnostic for female airway
+  }
+  // Male 45+ nocturia as hormonal signal (testosterone decline affects bladder)
+  if (!isFemale && ['45–54', '55–64', '65+'].includes(a.ageBand) && has('q11', 'nocturia2Plus')) {
+    scores.hormonal += 6;
   }
 
   // ── q_nocturia_male — male 45+ nocturia severity ──
@@ -478,6 +499,16 @@ function scoreNRSQuiz(a) {
     scores.airway += 5;
   }
 
+  // Male hormonal fatigue pattern — slow recovery, low energy, age 40+
+  if (a.sex === 'Male' && ['35–44', '45–54', '55–64', '65+'].includes(a.ageBand)) {
+    if (fatigueShape === 'I feel a flat, steady tiredness from waking to sleeping — I never really feel properly awake') {
+      scores.hormonal += 6;
+    }
+    if (has('q11', 'legUrge')) {
+      scores.hormonal += 4; // low T connection to RLS in males
+    }
+  }
+
   // ── q_cycle_sleep ──
   if (a.q_cycle_sleep === 'Yes — it\'s clearly worse in the week before my period') {
     scores.hormonal += 10;
@@ -498,7 +529,7 @@ function scoreNRSQuiz(a) {
   }
 
   // ── q6 — duration of problem ──
-  if (a.q6 === "Less than 3 months — it's relatively recent") {
+  if (a.q6 === "Less than 3 months — it's fairly recent") {
     // acute onset — no systemic score
     // situational cause likely, trigger question (q7) will add signal if relevant
   }
@@ -528,7 +559,6 @@ function scoreNRSQuiz(a) {
   }
   if (trigger.includes('medication')) {
     scores.substances += 8;
-    scores.hormonal += 6;
   }
   if (trigger.includes('stress')) {
     scores.mind_stress += 8;
@@ -551,10 +581,65 @@ function scoreNRSQuiz(a) {
     red_flags.push('crisis');
   }
 
+  // ── CAREGIVER SUPPRESSION ──
+  if (a.specialCase_caregiver === 'Yes — and they wake me most nights') {
+    scores.mind_stress = Math.min(scores.mind_stress, 15);
+    scores.mood = Math.min(scores.mood, 10);
+    flags.push("caregiver_context");
+  }
+
+  // ── CROSS-CLUSTER INTERACTION RULES ──
+
+  // RULE 1: Body-Clock Reclassification (Insomnia → Circadian Mismatch)
+  const notSleepyYet = has('q10d_sleep_barriers', 'notSleepyYet');
+  const lateChronotype = a.q12b_chronotype === 'Asleep after 1 am, awake after 9 am' || a.q12b_chronotype === 'Asleep after 2 am, awake after 10 am or later';
+  const lateWeekendShift = a.q12_bed_freenight === '2–3 hours later' || a.q12_bed_freenight === '3+ hours later';
+  if (notSleepyYet && lateChronotype && lateWeekendShift) {
+    scores.mind_stress = Math.max(0, scores.mind_stress - 10);
+    scores.circadian += 10;
+    flags.push("circadian_reclassification");
+  }
+
+  // RULE 2: Stimulant-Masked Sleep Debt
+  const shortSleep = a.q1 === 'Less than 6 hours';
+  const instantOnset = a.q10_latency === 'Less than 5 minutes';
+  const caffeineMidday = has('q4', 'caffeineAfterMidday');
+  const afternoonCrash = (a.q0c_fatigue_shape && a.q0c_fatigue_shape.includes('afternoon')) || a.q0c_fatigue_shape === 'I feel a flat, steady tiredness from waking to sleeping — I never really feel properly awake';
+  if (shortSleep && instantOnset && caffeineMidday && afternoonCrash) {
+    scores.duration += 10;
+    scores.substances += 5;
+    flags.push("masked_sleep_debt");
+  }
+
+  // RULE 3: Alcohol + Airway Compound Risk
+  const alcoholUse = has('q4', 'alcohol');
+  const alcoholTiming = a.q9 === 'Within 2 hours of bed';
+  const snores = a.q3 === 'Yes — regularly or loudly' || a.q3 === 'Occasionally or mildly';
+  if (alcoholUse && alcoholTiming && snores) {
+    scores.airway += 8;
+    flags.push("alcohol_airway_interaction");
+  }
+
+  // RULE 4: Female-Pattern OSA Compound Flag
+  const noSnoring = a.q3 !== 'Yes — regularly or loudly' && a.q3 !== 'Occasionally or mildly';
+  const insomniaPresent = scores.mind_stress >= 10;
+  const morningHeadache = has('q8', 'morningHeadache');
+  const flatFatigue = fatigueShape === 'I feel a flat, steady tiredness from waking to sleeping — I never really feel properly awake';
+  const anyAirwayClue = has('q8', 'dryMouth') || has('q8', 'morningHeadache') || has('q8', 'soreThroat') || has('q8', 'nasalCongestion');
+  if (isFemale && noSnoring && insomniaPresent && morningHeadache && flatFatigue && anyAirwayClue) {
+    scores.airway += 20;
+    flags.push("female_pattern_osa");
+  }
+
+  // ── Apply severity multiplier (before caps) ──
+  Object.keys(scores).forEach(key => {
+    scores[key] = Math.round(scores[key] * severityMultiplier);
+  });
+
   // ── Domain caps — prevent over-represented domains from dominating ──
   const CAPS = {
-    airway: 50, circadian: 40, duration: 30, substances: 30,
-    environment: 30, hormonal: 50, mind_stress: 40, mood: 30,
+    airway: 50, circadian: 40, duration: 35, substances: 30,
+    environment: 30, hormonal: 50, mind_stress: 45, mood: 35,
     movement: 35, systemic: 30,
   };
   Object.keys(scores).forEach(k => {
@@ -563,8 +648,21 @@ function scoreNRSQuiz(a) {
 
   // ── Bucket F (multi-factor) detection ──
   // Triggers when 4+ mechanisms each score above 12 with no clear winner
+  const SIGNIFICANCE_THRESHOLDS = {
+    airway: 12,
+    circadian: 12,
+    duration: 10,
+    substances: 10,
+    environment: 10,
+    hormonal: 12,
+    mind_stress: 12,
+    mood: 8,
+    movement: 10,
+    systemic: 10,
+  };
+
   const significantMechanisms = Object.entries(scores)
-    .filter(([_, v]) => v >= 12)
+    .filter(([k, v]) => v >= (SIGNIFICANCE_THRESHOLDS[k] || 12))
     .sort(([, a], [, b]) => b - a);
 
   const topScore = significantMechanisms[0]?.[1] || 0;
@@ -606,6 +704,7 @@ function scoreNRSQuiz(a) {
     isMultiFactor,
     sleep_restriction,
     red_flags,
+    flags,
     caveatedResult: false, // set by App.js before scoring
   };
 }

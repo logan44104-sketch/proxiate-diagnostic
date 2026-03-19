@@ -22,6 +22,34 @@ export const MECHANISMS = {
     label: "Airway & breathing pattern",
     shortName: "Airway",
     tagline: "Something about your breathing is breaking up your sleep from the inside.",
+    keyInsight: "The tiredness isn't coming from bad sleep — it's coming from an airway that keeps partially closing while you sleep. Your brain is spending the night managing a breathing problem, not resting. You can't willpower your way out of that.",
+    products: [
+      {
+        name: "Lofta Home Sleep Test (WatchPAT ONE)",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_LOFTA",
+        network: "lofta.com direct or 37x",
+        affiliateRate: "up to 10%",
+        price: "$189",
+        rationale: "FDA-cleared home sleep test with physician review included. Confirms or rules out OSA before investing in CPAP equipment. The only responsible next step for someone with strong airway signals.",
+        displayLabel: "Home sleep test — physician reviewed",
+        tier: "primary",
+        medicalFlag: true,
+        note: "Always frame as a screening tool that leads to a doctor conversation — not a diagnosis."
+      },
+      {
+        name: "Hatch Restore 3",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_HATCH",
+        network: "Impact",
+        affiliateRate: "4-6%",
+        price: "$199",
+        rationale: "Side-sleeping positional cues and consistent wind-down routine support airway-friendly sleep habits while awaiting sleep study results.",
+        displayLabel: "Sleep routine anchor",
+        tier: "secondary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers point toward a breathing pattern that fragments your sleep — even though you may not notice it happening. When the airway narrows or gets blocked during sleep, the brain briefly wakes you to restore airflow. These micro-arousals can happen dozens of times per hour, preventing you from reaching and sustaining the deep sleep stages your body needs to repair and recharge. You might never remember waking, but your body keeps the score.",
@@ -49,14 +77,17 @@ export const MECHANISMS = {
 
     avatarVariants: {
       male_over45: {
+        keyInsight: "The tiredness isn't coming from bad sleep — it's coming from an airway that keeps partially closing while you sleep. Your brain is spending the night managing a breathing problem, not resting. You can't willpower your way out of that.",
         explanation:
           "Your answers point toward a breathing pattern that fragments your sleep. In men over 40, this is very commonly obstructive sleep apnea (OSA) — the airway relaxes and partially collapses during sleep, causing brief awakenings you may not remember. It's extremely common, underdiagnosed, and highly treatable. Many men describe it as life-changing once it's addressed.",
       },
       female_under45: {
+        keyInsight: "Sleep apnea in women rarely looks like the textbook version — no loud snoring, no obvious gasping. It shows up as exhaustion, morning headaches, and insomnia. Which means it gets missed for years. Your results suggest this is worth investigating before anything else.",
         explanation:
           "Your answers suggest your breathing may be disrupting your sleep. In younger women, this is often missed because it doesn't always look like 'classic' sleep apnea with loud snoring. It can show up as upper airway resistance syndrome (UARS) — subtle narrowing that fragments sleep without full blockages. Symptoms like fatigue, morning headaches, and brain fog are the main clues rather than dramatic snoring.",
       },
       female_perimenopause: {
+        keyInsight: "Sleep apnea in women rarely looks like the textbook version — no loud snoring, no obvious gasping. It shows up as exhaustion, morning headaches, and insomnia. Which means it gets missed for years. Your results suggest this is worth investigating before anything else.",
         explanation:
           "Your answers suggest breathing disruption during sleep. Airway issues become much more common around perimenopause and menopause — falling oestrogen levels reduce muscle tone in the upper airway. If your breathing symptoms are relatively new and coincide with other hormonal changes, that connection is worth mentioning to your doctor.",
         doctorTrigger:
@@ -76,6 +107,46 @@ export const MECHANISMS = {
     label: "Circadian mismatch pattern",
     shortName: "Circadian",
     tagline: "Your body clock and your alarm clock are fighting each other.",
+    keyInsight: "You don't have a sleep problem — you have a timing problem. Your brain isn't broken; it's on a different schedule than your life. Trying harder to sleep earlier won't fix it. Shifting your body clock will.",
+    products: [
+      {
+        name: "Carex Day-Light Elite",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_CAREX",
+        network: "Awin",
+        affiliateRate: "verify with Awin before publishing",
+        price: "$79-$99",
+        rationale: "Delivers the clinically validated 10,000 lux dose needed for actual circadian phase-shifting. Not just a wake light — this is the tool used in the clinical trials that established bright light therapy as a first-line treatment.",
+        displayLabel: "Morning light therapy lamp — 10,000 lux",
+        tier: "primary",
+        medicalFlag: false,
+        note: "Morning use only within 60 minutes of waking. Contraindicated in bipolar disorder without psychiatric supervision."
+      },
+      {
+        name: "Hatch Restore 3",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_HATCH",
+        network: "Impact",
+        affiliateRate: "4-6%",
+        price: "$199",
+        rationale: "Best option for users who need both a morning light anchor and a structured wind-down routine. Sunrise simulation + sound library + app-controlled bedtime schedule in one device.",
+        displayLabel: "Sunrise alarm + sleep routine",
+        tier: "secondary",
+        medicalFlag: false
+      },
+      {
+        name: "Philips SmartSleep Wake-Up Light (HF3520)",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_PHILIPS_SMARTSLEEP",
+        network: "Amazon Associates",
+        affiliateRate: "standard Amazon rate",
+        price: "$69-$99",
+        rationale: "Clinically proven sunrise simulation that reduces sleep inertia — the groggy dysphoric state on waking that worsens circadian misalignment. Best for users who need a reliable morning anchor cue.",
+        displayLabel: "Sunrise simulation alarm",
+        tier: "tertiary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers suggest a mismatch between when your body naturally wants to sleep and when life requires you to sleep. This is called circadian misalignment — and it's one of the most common and most fixable causes of non-restorative sleep. When you force sleep at the wrong biological time, you can spend 8 hours in bed and still wake feeling like you got 4, because the sleep stages don't line up with your body's internal rhythm.",
@@ -136,6 +207,46 @@ export const MECHANISMS = {
     label: "Not enough sleep opportunity",
     shortName: "Duration",
     tagline: "You're not giving your body enough hours to do the repair work it needs.",
+    keyInsight: "Your body isn't malfunctioning — it's just not getting enough time to finish the job. Deep restorative sleep happens in the later cycles of the night. When those get cut short by an alarm, you miss exactly the stages that make sleep feel like it worked.",
+    products: [
+      {
+        name: "Oura Ring Gen 4",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_OURA",
+        network: "Impact",
+        affiliateRate: "$10 flat or 5-10% depending on tier",
+        price: "$299-$349 + $5.99/month",
+        rationale: "Highest clinical accuracy of any consumer sleep tracker for four-stage sleep staging (Cohen's kappa 0.65 vs PSG). The readiness score directly communicates sleep debt impact in actionable terms — converts abstract 'I should sleep more' into objective data that motivates change.",
+        displayLabel: "Sleep tracker — clinical accuracy",
+        tier: "primary",
+        medicalFlag: false,
+        note: "Frame as awareness tool, not a nightly report card. Warn against orthosomnia (sleep tracking anxiety)."
+      },
+      {
+        name: "WHOOP 5.0",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_WHOOP",
+        network: "Impact",
+        affiliateRate: "$50 flat",
+        price: "$239/year (no hardware cost)",
+        rationale: "No upfront hardware cost. Best for users who want the widest recovery metrics alongside sleep. 14-day battery and real-time stress monitoring.",
+        displayLabel: "Recovery + sleep tracker",
+        tier: "secondary",
+        medicalFlag: false
+      },
+      {
+        name: "Fitbit Charge 6",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_FITBIT",
+        network: "Amazon Associates",
+        affiliateRate: "standard Amazon rate",
+        price: "$99-$140",
+        rationale: "Best budget option. No required subscription. Scores 0.55 kappa against PSG — still delivers 80% of the tracking value at a fraction of the cost. Sufficient for users who simply need to see their total sleep time objectively.",
+        displayLabel: "Sleep tracker — budget option",
+        tier: "tertiary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers suggest you may simply not be spending enough time asleep — even if it feels like you're in bed for long enough. When total sleep drops below what your body needs (which for most adults is 7–9 hours of actual sleep), the first thing to go is the deep restorative stages. Your brain triages — it keeps the essential survival sleep but cuts the recovery and memory-consolidation stages. The result is exactly what you're describing: technically sleeping, but waking unrefreshed.",
@@ -190,6 +301,47 @@ export const MECHANISMS = {
     label: "Stress & hyperarousal pattern",
     shortName: "Stress / arousal",
     tagline: "Your nervous system isn't switching off when it's time to sleep.",
+    keyInsight: "This isn't a sleep problem — it's a nervous system problem that happens to show up at bedtime. Your brain has learned to treat the night as a threat window. Until it learns otherwise, no amount of sleep hygiene will reliably override it.",
+    products: [
+      {
+        name: "Momentous Sleep Stack (Mag L-Threonate + L-Theanine + Apigenin)",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_MOMENTOUS_STACK",
+        network: "CJ Affiliate",
+        affiliateRate: "15% + $35 new customer bonus",
+        price: "$75-$90/month",
+        rationale: "Three-pathway approach to hyperarousal: magnesium modulates cortisol and supports GABA, L-theanine promotes alpha wave activity without sedation, apigenin acts as a mild GABA-A agonist. NSF certified. Best intersection of evidence, certification, and affiliate economics in this category.",
+        displayLabel: "Sleep supplement stack — hyperarousal formula",
+        tier: "primary",
+        medicalFlag: false,
+        note: "Always lead with CBT-I techniques and free behaviour changes. Frame supplements as supporting the conditions for sleep, not making you sleep. L-theanine may interact with blood pressure medications."
+      },
+      {
+        name: "Momentous KSM-66 Ashwagandha",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_MOMENTOUS_ASHWAGANDHA",
+        network: "CJ Affiliate",
+        affiliateRate: "15%",
+        price: "$35-$45/month",
+        rationale: "Multiple RCTs show 600mg/day reduces waking cortisol by 27-32% and shortens sleep latency by 15-35 minutes in stressed individuals. Best evidence-backed single ingredient for stress-driven sleep disruption.",
+        displayLabel: "Cortisol support — KSM-66 ashwagandha",
+        tier: "secondary",
+        medicalFlag: false,
+        note: "May interact with thyroid hormone medications. Not for use during pregnancy."
+      },
+      {
+        name: "Calm App",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_CALM",
+        network: "Impact or 37x",
+        affiliateRate: "~19-21% via 37x or $2/sub via Impact",
+        price: "$70/year",
+        rationale: "Guided body scans, breathing exercises, and sleep stories directly address pre-sleep hyperarousal. No tolerance, no dependency risk. Best paired with the supplement stack as the behavioural complement.",
+        displayLabel: "Guided sleep & meditation app",
+        tier: "tertiary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers suggest your nervous system stays in a heightened state when it should be winding down. This isn't a willpower problem — it's a physiological one. Your stress response system (the sympathetic nervous system) is staying active, keeping cortisol elevated, heart rate up, and the brain in a vigilant mode. Deep sleep requires the opposite state. Until your body feels genuinely safe and settled, it won't let you sink into the restorative stages.",
@@ -244,6 +396,46 @@ export const MECHANISMS = {
     label: "Mood & low-energy pattern",
     shortName: "Mood",
     tagline: "Low mood and poor sleep feed each other in a cycle that's hard to break alone.",
+    keyInsight: "The fatigue you're feeling isn't just tiredness — it's what happens when your brain chemistry stops producing the motivation and energy signals that normally drive you. More sleep won't fix that. Addressing the mood is the lever that moves everything else.",
+    products: [
+      {
+        name: "Carex Day-Light Elite",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_CAREX",
+        network: "Awin",
+        affiliateRate: "verify with Awin before publishing",
+        price: "$79-$99",
+        rationale: "Morning bright light therapy at 10,000 lux reduces SAD symptoms by 40-60% and is effective for non-seasonal depression when used in the morning. Simultaneously addresses mood, energy, and the sleep-mood connection. Strongest evidence-backed product for this cluster.",
+        displayLabel: "Morning light therapy — mood + sleep",
+        tier: "primary",
+        medicalFlag: false,
+        note: "Never imply this treats depression. Use language like 'supports morning energy and mood-sleep connection.' Always include GP prompt for users with persistent low mood."
+      },
+      {
+        name: "Hatch Restore 3",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_HATCH",
+        network: "Impact",
+        affiliateRate: "4-6%",
+        price: "$199",
+        rationale: "Sunrise simulation reduces sleep inertia — the groggy dysphoric state on waking that is worst in depression. Full bedtime routine with sunset simulation and white noise addresses both ends of the sleep window.",
+        displayLabel: "Sunrise alarm + wind-down routine",
+        tier: "secondary",
+        medicalFlag: false
+      },
+      {
+        name: "Momentous Magnesium Glycinate",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_MOMENTOUS_MAG",
+        network: "CJ Affiliate",
+        affiliateRate: "15%",
+        price: "$25-$35/month",
+        rationale: "Magnesium deficiency is associated with both poor sleep and low mood. 2025 RCT showed secondary mood score improvements alongside sleep improvements. NSF certified. Safe, low-risk first supplement for this cluster.",
+        displayLabel: "Magnesium glycinate — sleep + mood support",
+        tier: "tertiary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers suggest that mood is playing a significant role in your sleep and energy. Depression and persistent low mood don't just make you feel sad — they fundamentally alter sleep architecture, reduce time in restorative deep sleep, and produce a specific kind of fatigue that doesn't improve with more hours in bed. The relationship runs both ways: poor sleep worsens mood, and low mood worsens sleep. Breaking this cycle often requires addressing both sides at once.",
@@ -292,6 +484,46 @@ export const MECHANISMS = {
     label: "Substance interference pattern",
     shortName: "Substances",
     tagline: "Something you're consuming is sabotaging your sleep from the inside.",
+    keyInsight: "The thing helping you fall asleep may be the same thing making your sleep unrestorative. Alcohol, cannabis, and sleep medication all sedate — but sedation and real sleep aren't the same thing. The sleep stages your body needs most are the ones these substances suppress.",
+    products: [
+      {
+        name: "Hatch Restore 3",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_HATCH",
+        network: "Impact",
+        affiliateRate: "4-6%",
+        price: "$199",
+        rationale: "Creating a consistent wind-down routine is the most powerful complement to substance cutoff. Structures the routine habit that replaces the substance cue — same time, same sequence, every night. Sound library, sunset simulation, and app scheduling do the behavioural scaffolding.",
+        displayLabel: "Sleep routine anchor — habit replacement",
+        tier: "primary",
+        medicalFlag: false,
+        note: "Sleepio (digital CBT-I) has the strongest clinical evidence for this cluster including RCT evidence showing it reduces alcohol consumption alongside insomnia. No public affiliate program — reference as a free resource separately from product recommendations."
+      },
+      {
+        name: "Momentous Magnesium Glycinate",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_MOMENTOUS_MAG",
+        network: "CJ Affiliate",
+        affiliateRate: "15%",
+        price: "$25-$35/month",
+        rationale: "Supports GABA activity and nervous system regulation during the period of substance reduction. Helps address the rebound anxiety and arousal that often appears when alcohol or cannabis is reduced.",
+        displayLabel: "Magnesium glycinate — nervous system support",
+        tier: "secondary",
+        medicalFlag: false
+      },
+      {
+        name: "Calm App",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_CALM",
+        network: "Impact or 37x",
+        affiliateRate: "~19-21% via 37x",
+        price: "$70/year",
+        rationale: "Replaces the 'switching off' function that substances were serving. Guided body scans and sleep stories give the brain something to do during the transition period. No dependency risk.",
+        displayLabel: "Guided sleep app — substance replacement",
+        tier: "tertiary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers suggest that one or more substances — caffeine, alcohol, cannabis, nicotine, or sleep medication — are disrupting the quality of your sleep. This doesn't mean you have a 'problem' with these substances in the addiction sense. It means their pharmacology is interfering with your sleep architecture in ways you might not notice. Alcohol, for example, helps you fall asleep faster but then fragments the second half of the night and suppresses REM sleep. Caffeine has a half-life of 5–7 hours, meaning a 2 pm coffee still has half its stimulant effect at 9 pm.",
@@ -340,6 +572,46 @@ export const MECHANISMS = {
     label: "Environment & behaviour pattern",
     shortName: "Environment",
     tagline: "Your sleep environment or evening habits are working against you.",
+    keyInsight: "Your brain needs unbroken continuity to cycle through deep sleep. Every disruption — noise, light, temperature, screens, a partner moving — resets that cycle. You can do everything else right and still wake exhausted if this layer isn't solved.",
+    products: [
+      {
+        name: "Hatch Restore 3",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_HATCH",
+        network: "Impact",
+        affiliateRate: "4-6%",
+        price: "$199",
+        rationale: "Best all-in-one environment solution for users with combined noise and light disruption. Sound library, sunrise simulation, sunset wind-down, and app-controlled routines. Highest-leverage single purchase for the environment cluster.",
+        displayLabel: "All-in-one sleep environment device",
+        tier: "primary",
+        medicalFlag: false
+      },
+      {
+        name: "Eight Sleep Pod 4",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EIGHTSLEEP",
+        network: "CJ / 37x",
+        affiliateRate: "6% (~$120+ per sale on $2K AOV)",
+        price: "$1,995-$2,995 + ~$25/month",
+        rationale: "Temperature is the highest-leverage single environmental variable for sleep quality. Active thermal regulation cooling the bed surface directly triggers core body temperature drop that initiates sleep onset. Best recommendation for users whose primary disruptor is overheating.",
+        displayLabel: "Active temperature control — premium",
+        tier: "secondary",
+        medicalFlag: false,
+        note: "Position as 'if you want to go deep' — not the default first recommendation. High price means lower conversion but highest dollar value per sale of any product across all 10 clusters."
+      },
+      {
+        name: "LectroFan EVO",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_LECTROFAN",
+        network: "Amazon Associates",
+        affiliateRate: "standard Amazon rate",
+        price: "$49-$60",
+        rationale: "22 non-looping digital sounds — the non-looping generation is critical as repeated sound artefacts can themselves cause micro-arousals. Best dedicated white noise device for users whose primary disruptor is noise.",
+        displayLabel: "White noise machine — noise disruption",
+        tier: "tertiary",
+        medicalFlag: false
+      }
+    ],
 
     explanation:
       "Your answers suggest that external factors — your bedroom setup, noise, temperature, screen habits, or disruptions from a partner, kids, or pets — are fragmenting your sleep. The brain needs a sustained, uninterrupted window to cycle through all sleep stages. Even brief disturbances that you don't fully wake for can reset the cycle and prevent you from reaching the deepest, most restorative stages.",
@@ -390,6 +662,50 @@ export const MECHANISMS = {
     label: "Hormonal & metabolic pattern",
     shortName: "Hormonal",
     tagline: "A hormonal or metabolic imbalance may be draining the quality from your sleep.",
+    keyInsight: "Fatigue that doesn't respond to more sleep is often a blood test away from an explanation. Thyroid dysfunction, low ferritin, blood sugar instability, and declining testosterone all produce sleep that looks fine from the outside but delivers almost no restoration. The fix isn't sleep — it's finding what's depleted.",
+    products: [
+      {
+        name: "Momentous Magnesium Glycinate",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_MOMENTOUS_MAG",
+        network: "CJ Affiliate",
+        affiliateRate: "15%",
+        price: "$25-$35/month",
+        rationale: "Modulates HPA axis activity (cortisol regulation), supports GABA activity, and is a cofactor for melatonin synthesis. 2025 RCT (largest placebo-controlled trial to date) showed significant ISI score reduction vs placebo. NSF certified.",
+        displayLabel: "Magnesium glycinate — hormonal sleep support",
+        tier: "primary",
+        medicalFlag: false,
+        note: "Contraindicated in kidney disease. Do not recommend alongside high-dose supplementation without GP guidance."
+      },
+      {
+        name: "Everlywell Women's Health Test",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EVERLYWELL_WOMENS",
+        network: "Impact",
+        affiliateRate: "4.8-9.6%",
+        price: "$149-$199",
+        rationale: "Tests oestradiol, progesterone, FSH, LH, and DHEA-S from a home finger-prick. CLIA-certified, physician-reviewed results. Removes uncertainty and motivates appropriate medical consultation. Show only to female users.",
+        displayLabel: "At-home hormone panel — women",
+        tier: "secondary",
+        medicalFlag: true,
+        showWhen: "sex === 'Female'",
+        note: "Frame as 'removes uncertainty and guides your GP conversation' — not a diagnosis tool."
+      },
+      {
+        name: "Everlywell Perimenopause Test",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EVERLYWELL_PERI",
+        network: "Impact",
+        affiliateRate: "4.8-9.6%",
+        price: "$149",
+        rationale: "Specifically tests the hormonal markers most relevant to perimenopause-driven sleep disruption. Direct evidence for the female_perimenopause avatar variant.",
+        displayLabel: "At-home perimenopause test",
+        tier: "secondary",
+        medicalFlag: true,
+        showWhen: "avatarVariant === 'female_perimenopause'",
+        note: "Always pair with 'discuss results with your GP' language."
+      }
+    ],
 
     explanation:
       "Your answers suggest that a hormonal or metabolic process may be undermining your sleep quality. Thyroid dysfunction, iron deficiency, blood sugar instability, and sex hormone changes can all produce sleep that looks normal from the outside but doesn't deliver the restoration your body needs. These causes are common, usually straightforward to test for, and often very treatable.",
@@ -417,6 +733,7 @@ export const MECHANISMS = {
 
     avatarVariants: {
       female_perimenopause: {
+        keyInsight: "Hormones don't just affect your mood and cycle — they directly control your sleep architecture. Progesterone is a natural sedative. Oestrogen regulates temperature and REM sleep. When these shift — through your cycle, perimenopause, or thyroid changes — sleep quietly falls apart. This isn't in your head and it isn't about trying harder.",
         explanation:
           "Your answers suggest hormonal changes may be driving your sleep disruption. During perimenopause and menopause, falling oestrogen and progesterone levels directly affect sleep architecture — progesterone is actually a natural sedative, and losing it can make sleep lighter, more fragmented, and less restorative. Night sweats, temperature dysregulation, and mood changes compound the problem. This is extremely common and very treatable, but it's often dismissed as 'just part of ageing.'",
         behaviours: [
@@ -427,10 +744,12 @@ export const MECHANISMS = {
         ],
       },
       male_over45: {
+        keyInsight: "Fatigue that doesn't respond to more sleep is often a blood test away from an explanation. Thyroid dysfunction, low ferritin, blood sugar instability, and declining testosterone all produce sleep that looks fine from the outside but delivers almost no restoration. The fix isn't sleep — it's finding what's depleted.",
         explanation:
           "Your answers point toward a possible metabolic or hormonal contributor to your fatigue. In men over 40, the most common culprits are thyroid dysfunction, iron deficiency (yes, it affects men too — especially with any GI issues), and in some cases, declining testosterone. Low testosterone doesn't just affect libido — it reduces sleep quality, energy, and recovery. A blood panel can check all of these relatively quickly.",
       },
       female_reproductive_age: {
+        keyInsight: "Hormones don't just affect your mood and cycle — they directly control your sleep architecture. Progesterone is a natural sedative. Oestrogen regulates temperature and REM sleep. When these shift — through your cycle, perimenopause, or thyroid changes — sleep quietly falls apart. This isn't in your head and it isn't about trying harder.",
         explanation:
           "Your answers suggest a hormonal or metabolic factor may be at play. In women of reproductive age, iron deficiency is extremely common (especially with heavy periods) and is one of the most underdiagnosed causes of fatigue and poor sleep. Thyroid disorders also peak in this age group. Both are simple to test for and highly treatable. If your fatigue fluctuates with your menstrual cycle, that's an important detail to mention to your GP.",
       },
@@ -448,6 +767,47 @@ export const MECHANISMS = {
     label: "Movement, pain & nocturia pattern",
     shortName: "Movement / pain",
     tagline: "Physical discomfort or restlessness is pulling you out of deep sleep.",
+    keyInsight: "Your sleep isn't light because you're a light sleeper — it's light because your body keeps triggering micro-arousals to deal with physical discomfort. You don't remember most of them. But each one resets your sleep cycle and prevents you from reaching the stages where real recovery happens.",
+    products: [
+      {
+        name: "Everlywell At-Home Ferritin Test",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EVERLYWELL_FERRITIN",
+        network: "Impact",
+        affiliateRate: "4.8-9.6%",
+        price: "$69",
+        rationale: "AASM recommends treating RLS patients with ferritin under 75 ng/mL with oral iron. Iron deficiency is often curative for RLS. Testing before supplementing is the only responsible recommendation — do not suggest iron supplements without knowing ferritin levels first.",
+        displayLabel: "At-home ferritin test — restless legs",
+        tier: "primary",
+        medicalFlag: true,
+        note: "Never recommend iron supplementation based on this result alone — that requires physician guidance. Frame strictly as 'the first step before anything else.'"
+      },
+      {
+        name: "Momentous Magnesium Glycinate",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_MOMENTOUS_MAG",
+        network: "CJ Affiliate",
+        affiliateRate: "15%",
+        price: "$25-$35/month",
+        rationale: "For users without confirmed iron deficiency, magnesium modulates NMDA receptors and reduces peripheral neuromuscular excitability. Secondary evidence-based option for restless sensations and muscle tension at night.",
+        displayLabel: "Magnesium glycinate — muscle tension support",
+        tier: "secondary",
+        medicalFlag: false
+      },
+      {
+        name: "Oura Ring Gen 4",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_OURA",
+        network: "Impact",
+        affiliateRate: "$10 flat or 5-10%",
+        price: "$299-$349 + $5.99/month",
+        rationale: "For users whose movement issue is low physical activity rather than RLS — tracks daily steps and exercise and correlates them with sleep quality the following night. Builds the feedback loop between movement and sleep that motivates behaviour change.",
+        displayLabel: "Activity + sleep tracker",
+        tier: "tertiary",
+        medicalFlag: false,
+        showWhen: "primaryMovementIssue === 'low_activity'"
+      }
+    ],
 
     explanation:
       "Your answers indicate that physical symptoms — restless legs, pain, teeth grinding, or frequent bathroom trips — are fragmenting your sleep. These aren't just annoyances; each one triggers a micro-arousal that resets your sleep cycle. Even if you fall back asleep quickly, you lose the continuity that deep restorative sleep requires. The good news is that most of these have specific, targeted interventions.",
@@ -496,6 +856,48 @@ export const MECHANISMS = {
     label: "Systemic fatigue pattern",
     shortName: "Systemic",
     tagline: "Your fatigue may be driven by something deeper than sleep mechanics.",
+    keyInsight: "When fatigue persists regardless of how much you sleep, the problem usually isn't in your sleep — it's in what's driving the fatigue upstream. Sleep is where the body recovers, but if something systemic is constantly creating damage to recover from, sleep can't keep up. More sleep isn't the answer. Finding the source is.",
+    products: [
+      {
+        name: "Everlywell Vitamin D & Inflammation Test",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EVERLYWELL_VITD",
+        network: "Impact",
+        affiliateRate: "4.8-9.6%",
+        price: "$49",
+        rationale: "Vitamin D deficiency is one of the most common and correctable causes of fatigue and disrupted sleep. Tests 25-hydroxyvitamin D (clinical gold standard) and hs-CRP (systemic inflammation marker). Lowest barrier to entry, highest population prevalence of the deficiency. Best first test for the systemic cluster.",
+        displayLabel: "Vitamin D + inflammation test",
+        tier: "primary",
+        medicalFlag: true,
+        note: "Never recommend specific supplement doses based on test output — that requires physician guidance. Do not recommend self-supplementation above 4,000 IU/day."
+      },
+      {
+        name: "Everlywell Thyroid Test",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EVERLYWELL_THYROID",
+        network: "Impact",
+        affiliateRate: "4.8-9.6%",
+        price: "$99",
+        rationale: "Hypothyroidism is a common systematically underdiagnosed cause of fatigue, poor sleep, and weight changes. Tests TSH, free T3, and free T4 — the standard clinical panel. If fatigue and sleep disruption don't respond to standard sleep hygiene, thyroid is worth ruling out.",
+        displayLabel: "At-home thyroid test",
+        tier: "secondary",
+        medicalFlag: true,
+        note: "Thyroid disease requires physician management. Do not suggest treatment. Borderline TSH values require clinical context."
+      },
+      {
+        name: "Everlywell Sleep & Stress Test",
+        type: "affiliate",
+        url: "AFFILIATE_URL_PLACEHOLDER_EVERLYWELL_SLEEP_STRESS",
+        network: "Impact",
+        affiliateRate: "4.8-9.6%",
+        price: "$149",
+        rationale: "Diurnal cortisol profile (4x), DHEA-S, and melatonin. Identifies HPA axis dysregulation patterns — low flat cortisol indicates exhaustion pattern, high evening cortisol indicates hyperarousal. Most relevant for post-viral and autoimmune avatar variants.",
+        displayLabel: "Sleep hormone + cortisol panel",
+        tier: "tertiary",
+        medicalFlag: true,
+        showWhen: "flags.includes('post_viral') || knownConditions.autoimmune"
+      }
+    ],
 
     explanation:
       "Your answers suggest a pattern where fatigue persists regardless of how much you sleep or how well you manage your sleep habits. This points toward a systemic cause — something affecting your body as a whole rather than your sleep specifically. Post-viral fatigue (including long COVID), ME/CFS-spectrum conditions, autoimmune inflammation, and other whole-body processes can produce exactly this pattern: sleep that should be enough but never restores you.",

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import scoreNRSQuiz  from "./Lib/src/lib/nrsScoring";
 import { MECHANISMS, resolveMechanism } from "./config/mechanisms";
+import "./App.css";
 
 const QUESTIONS = [
   // ═══════════════════════════════════════════
@@ -18,6 +19,32 @@ const QUESTIONS = [
     label: "What sex were you assigned at birth?",
     type: "single",
     options: ["Male", "Female"],
+  },
+  {
+    key: "q_door",
+    label: "What's your biggest sleep frustration right now?",
+    type: "single",
+    options: [
+      "I can't fall asleep when I want to",
+      "I fall asleep fine but wake up during the night",
+      "I sleep enough hours but wake up feeling exhausted",
+      "I'm tired all day no matter what I do",
+      "I can't stay awake when I need to",
+    ],
+  },
+  {
+    key: "workPattern",
+    label: "Which of these best describes your typical weekly schedule?",
+    type: "single",
+    options: [
+      "Standard hours — roughly 9–5, Monday to Friday",
+      "Early start — I'm up before 6am most days (trades, hospitality, logistics)",
+      "Shift work — rotating shifts, night shifts, or irregular rosters",
+      "Flexible or self-directed — I set my own hours (self-employed, freelance, entrepreneur)",
+      "Student — mix of classes, study, and part-time work",
+      "Home-based carer — primary carer for children, family, or dependants",
+      "Retired or no fixed schedule",
+    ],
   },
   {
     key: "specialCase_pregnancy",
@@ -175,7 +202,7 @@ const QUESTIONS = [
       {
         key: "activeTask",
         label:
-          "During an active task — eating, working at a desk, standing up",
+          "During an active task — eating, working, standing up",
       },
       {
         key: "noneOfThese",
@@ -246,54 +273,47 @@ const QUESTIONS = [
       },
       {
         key: "cantSwitchOff",
-        label:
-          "My brain just won't switch off — not anxious exactly, just… on",
+        label: "My brain just won't switch off — not anxious exactly, just… on",
       },
       {
         key: "notSleepyYet",
-        label:
-          "I don't actually feel sleepy yet — I'm lying there wide awake",
-      },
-      {
-        key: "cantGetComfortable",
-        label:
-          "I can't get physically comfortable — tossing, turning, restless",
-      },
-      {
-        key: "tooHotOrCold",
-        label: "The temperature is wrong — too hot or too cold",
-      },
-      {
-        key: "noise",
-        label:
-          "Noise keeps me alert — traffic, neighbours, housemates, partner snoring",
-      },
-      {
-        key: "screenHooked",
-        label:
-          "I keep scrolling or watching something — I can't put the screen down",
-      },
-      {
-        key: "painOrDiscomfort",
-        label: "Pain or physical discomfort",
-      },
-      {
-        key: "digestiveDiscomfort",
-        label:
-          "Heartburn, acid reflux, or a full/uncomfortable stomach",
-      },
-      {
-        key: "heartPounding",
-        label:
-          "My heart is pounding or my body feels physically tense or wired",
+        label: "I don't actually feel sleepy yet — lying there wide awake",
       },
       {
         key: "dreadOrLowMood",
-        label: "A heavy or low feeling — dread about tomorrow or life in general",
+        label: "I feel a sense of dread or low mood about the next day",
       },
       {
-        key: "noneOfThese",
-        label: "None of these — I fall asleep fine, my problem is staying asleep or waking unrefreshed",
+        key: "painOrDiscomfort",
+        label: "Physical discomfort — pain, temperature, restless legs",
+      },
+      {
+        key: "wakeBackQuickly",
+        label: "I wake up briefly but fall back quickly",
+      },
+      {
+        key: "heartPounding",
+        label: "My heart is pounding or racing",
+      },
+      {
+        key: "anxiousNoReason",
+        label: "I feel anxious or on edge for no obvious reason",
+      },
+      {
+        key: "hungerBathroom",
+        label: "Hunger or needing the bathroom",
+      },
+      {
+        key: "noise",
+        label: "Noise or light waking me",
+      },
+      {
+        key: "partnerWaking",
+        label: "My partner or someone else waking me",
+      },
+      {
+        key: "nothingSpecific",
+        label: "Nothing specific — I just lie awake",
       },
     ],
   },
@@ -310,6 +330,7 @@ const QUESTIONS = [
       "I wake and lie there for 20+ minutes before getting back to sleep",
       "I wake and I'm wide awake — it can take over an hour to get back to sleep",
       "I wake very early (3–5 am) and can't get back to sleep at all",
+      "It depends on the night — sometimes I'm fine, other times I'm awake for ages",
     ],
   },
 
@@ -439,13 +460,13 @@ const QUESTIONS = [
     label: "Left to your own body clock — no alarm, no obligations — when do you naturally fall asleep and wake up?",
     type: "single",
     options: [
-      "Before 9:30 pm and awake before 5:30 am",
-      "Around 10 pm and awake around 6 am",
-      "Around 11 pm and awake around 7 am",
-      "Around midnight and awake around 8 am",
-      "After 1 am and awake after 9 am",
-      "After 2 am and awake after 10 am or later",
-      "No idea — my sleep has never been consistent enough to have a natural pattern",
+      "Asleep before 9:30 pm, awake before 5:30 am",
+      "Asleep around 10 pm, awake around 6 am",
+      "Asleep around 11 pm, awake around 7 am",
+      "Asleep around midnight, awake around 8 am",
+      "Asleep after 1 am, awake after 9 am",
+      "Asleep after 2 am, awake after 10 am or later",
+      "No idea — my sleep has never been consistent enough to know",
     ],
   },
 
@@ -457,7 +478,7 @@ const QUESTIONS = [
     label:
       "When you first try to fall asleep, what is your mind usually doing?",
     type: "single",
-    showWhen: { q10_latency: ["Less than 5 minutes", "5–15 minutes"] },
+    showWhen: { q10_latency: ["5–15 minutes", "15–30 minutes", "30–60 minutes", "More than an hour"] },
     options: [
       "Racing with worries, stress, or anxiety",
       "Buzzing with ideas or energy (not worry)",
@@ -580,7 +601,7 @@ const QUESTIONS = [
     label: "How long have you been dealing with this?",
     type: "single",
     options: [
-      "Less than 3 months — it's relatively recent",
+      "Less than 3 months — it's fairly recent",
       "3–6 months",
       "6–12 months",
       "1–3 years",
@@ -675,18 +696,7 @@ function OptionButtons({ current, answers, onSingle, onMulti }) {
                   onMulti(current.key, opt.key);
                 }
               }}
-              style={{
-                background: selected ? "#1e1a14" : "#141210",
-                border: `1px solid ${selected ? "#C4512A" : "#2a2520"}`,
-                borderRadius: "7px",
-                padding: "11px 16px",
-                textAlign: "left",
-                cursor: "pointer",
-                transition: "all .15s",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
+              className={`prox-option${selected ? " selected" : ""}`}
             >
               <div
                 style={{
@@ -694,8 +704,8 @@ function OptionButtons({ current, answers, onSingle, onMulti }) {
                   height: "16px",
                   flexShrink: 0,
                   borderRadius: isMultiType ? "4px" : "50%",
-                  border: `2px solid ${selected ? "#C4512A" : "#3a3530"}`,
-                  background: selected ? "#C4512A" : "transparent",
+                  border: `2px solid ${selected ? "var(--prox-terra)" : "var(--prox-pale)"}`,
+                  background: selected ? "var(--prox-terra)" : "transparent",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -707,7 +717,7 @@ function OptionButtons({ current, answers, onSingle, onMulti }) {
                     style={{
                       width: isMultiType ? "8px" : "7px",
                       height: isMultiType ? "8px" : "7px",
-                      background: "#f0ebe3",
+                      background: "var(--prox-stone)",
                       borderRadius: isMultiType ? "2px" : "50%",
                     }}
                   />
@@ -715,9 +725,10 @@ function OptionButtons({ current, answers, onSingle, onMulti }) {
               </div>
               <span
                 style={{
-                  fontSize: "14px",
-                  color: selected ? "#f0ebe3" : "#b0a89e",
+                  fontSize: "15px",
+                  color: "var(--prox-forest)",
                   lineHeight: "1.4",
+                  fontFamily: "'DM Sans', sans-serif",
                 }}
               >
                 {optLabel}
@@ -737,7 +748,6 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState(null);
   const [caveatedResult, setCaveatedResult] = useState(false);
-  const [legendOpen, setLegendOpen] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [emailStatus, setEmailStatus] = useState("idle"); // idle | submitting | success | error
 
@@ -859,7 +869,7 @@ function App() {
 
   const handleEmailSubmit = async (primaryMechanism) => {
     setEmailStatus("submitting");
-    const payload = { email: emailInput, bucket: `bucket_${primaryMechanism}` };
+    const payload = { email: emailInput, bucket: `bucket_${primaryMechanism}`, sex: answers.sex };
     console.log("[subscribe] fetching", "/api/subscribe", payload);
     try {
       const res = await fetch("/api/subscribe", {
@@ -874,37 +884,78 @@ function App() {
     }
   };
 
+  const visibleQuestions = QUESTIONS.filter((_, i) => {
+    // count how many questions are visible up to and including current
+    let count = 0;
+    for (let j = 0; j <= i; j++) {
+      if (shouldShow(QUESTIONS[j])) count++;
+    }
+    return shouldShow(QUESTIONS[i]);
+  });
+  const totalVisible = visibleQuestions.length;
+  const currentVisible = visibleQuestions.filter((_, i) =>
+    QUESTIONS.indexOf(visibleQuestions[i]) <= currentIndex
+  ).length;
+  const progressPct = totalVisible > 0 ? Math.round((currentVisible / totalVisible) * 100) : 0;
+
   return (
     <>
-      <h1
+      <div
         style={{
-          fontFamily: "'DM Serif Display', serif",
-          fontSize: "26px",
-          marginBottom: "10px",
-          color: "#f6efe6",
+          width: "100%",
+          background: "#FFFFFF",
+          padding: "18px 32px",
+          borderBottom: "1px solid #E8E3DC",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxSizing: "border-box",
         }}
       >
-        Proxiate – NRS Triage
-      </h1>
-      <p
-        style={{
-          fontSize: "12px",
-          color: "#8a8278",
-          marginBottom: "24px",
-        }}
-      >
-        Your pattern (not a diagnosis)
-      </p>
+        <span
+          style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "22px",
+            fontWeight: 400,
+            color: "#1A1A1A",
+            letterSpacing: "0px",
+          }}
+        >
+          Proxiate
+        </span>
+        <span
+          style={{
+            color: "#D0C9BE",
+            margin: "0 14px",
+            fontWeight: 400,
+            fontSize: "16px",
+          }}
+        >
+          |
+        </span>
+        <span
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "12px",
+            fontWeight: 500,
+            color: "#9A9A9A",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+          }}
+        >
+          Sleep Pattern Quiz
+        </span>
+      </div>
 
       <div
         style={{
           maxWidth: "660px",
           margin: "0 auto",
           padding: "28px 24px 80px",
-          background: "#0f0d0b",
+          background: "var(--prox-stone)",
           minHeight: "100vh",
-          fontFamily: "'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-          color: "#f0ebe3",
+          fontFamily: "'DM Sans', system-ui, sans-serif",
+          color: "var(--prox-body)",
         }}
       >
 
@@ -912,15 +963,15 @@ function App() {
         <div style={{ marginTop: 24 }}>
 
           {result.type === "hardStopPregnancy" && (
-            <div style={{ border: "1px solid #C4512A", borderRadius: 8, padding: 20, marginBottom: 16 }}>
-              <h3 style={{ color: "#f0ebe3", marginTop: 0 }}>This quiz wasn't built for pregnancy — here's why</h3>
-              <p style={{ color: "#b0a89e" }}>
+            <div style={{ border: "0.5px solid var(--prox-pale)", borderRadius: 8, padding: 20, marginBottom: 16, background: "var(--prox-surface)" }}>
+              <h3 style={{ color: "var(--prox-forest)", marginTop: 0 }}>This quiz wasn't built for pregnancy — here's why</h3>
+              <p style={{ color: "var(--prox-muted)" }}>
                 Pregnancy changes almost every mechanism this quiz measures. Blood volume increases by
                 around 50%, progesterone shifts your sleep architecture, and your iron demands roughly
                 double. Any result we gave you would be based on a model that doesn't apply right now
                 — that's not helpful, it's noise.
               </p>
-              <p style={{ color: "#b0a89e" }}>
+              <p style={{ color: "var(--prox-muted)" }}>
                 What actually helps: talk to your midwife or GP. Sleep disruption in pregnancy is
                 extremely common and there are safe, evidence-based approaches they can guide you through.
               </p>
@@ -929,47 +980,35 @@ function App() {
 
           {result.showCrisisGate && (
             <>
-              <div style={{ border: "1px solid #C4512A", borderRadius: 8, padding: 20, marginBottom: 16, background: "#1a0a08" }}>
-                <h3 style={{ color: "#f0ebe3", marginTop: 0 }}>Before you see your results</h3>
-                <p style={{ color: "#b0a89e", marginBottom: 12 }}>
+              <div style={{ border: "1.5px solid var(--prox-terra)", borderRadius: 8, padding: 20, marginBottom: 16, background: "var(--prox-surface)" }}>
+                <h3 style={{ color: "var(--prox-forest)", marginTop: 0 }}>Before you see your results</h3>
+                <p style={{ color: "var(--prox-muted)", marginBottom: 12 }}>
                   You mentioned thoughts of self-harm or that life isn't worth living. Please know
                   that support is available right now.
                 </p>
-                <p style={{ color: "#b0a89e", marginBottom: 8 }}>
-                  Call or text <strong style={{ color: "#f0ebe3" }}>988</strong> (Suicide and Crisis Lifeline — free, 24/7)
+                <p style={{ color: "var(--prox-muted)", marginBottom: 8 }}>
+                  Call or text <strong style={{ color: "var(--prox-forest)" }}>988</strong> (Suicide and Crisis Lifeline — free, 24/7)
                 </p>
-                <p style={{ color: "#b0a89e", marginBottom: 8 }}>
-                  Text <strong style={{ color: "#f0ebe3" }}>HOME</strong> to <strong style={{ color: "#f0ebe3" }}>741741</strong> (Crisis Text Line)
+                <p style={{ color: "var(--prox-muted)", marginBottom: 8 }}>
+                  Text <strong style={{ color: "var(--prox-forest)" }}>HOME</strong> to <strong style={{ color: "var(--prox-forest)" }}>741741</strong> (Crisis Text Line)
                 </p>
-                <p style={{ color: "#b0a89e", marginBottom: 0 }}>
-                  Emergency: call <strong style={{ color: "#f0ebe3" }}>911</strong>
+                <p style={{ color: "var(--prox-muted)", marginBottom: 0 }}>
+                  Emergency: call <strong style={{ color: "var(--prox-forest)" }}>911</strong>
                 </p>
-                <p style={{ color: "#8a8278", marginTop: 12, marginBottom: 0, fontSize: "13px" }}>
+                <p style={{ color: "var(--prox-muted)", marginTop: 12, marginBottom: 0, fontSize: "13px" }}>
                   You don't have to be in immediate danger to reach out — these lines are there for
                   anyone who's struggling.
                 </p>
               </div>
-              <hr style={{ border: "none", borderTop: "1px solid #2a2520", margin: "24px 0" }} />
+              <hr style={{ border: "none", borderTop: "0.5px solid var(--prox-pale)", margin: "24px 0" }} />
             </>
           )}
 
           {result.type !== "hardStopPregnancy" && (
             <>
-              <style>{`
-                .nrs-results-layout { display: flex; gap: 28px; align-items: flex-start; }
-                .nrs-sidebar { width: 240px; flex-shrink: 0; position: sticky; top: 24px; }
-                .nrs-main { flex: 1; min-width: 0; }
-                .nrs-mobile-summary { display: none; margin-bottom: 16px; }
-                @media (max-width: 767px) {
-                  .nrs-results-layout { flex-direction: column; }
-                  .nrs-sidebar { display: none; }
-                  .nrs-mobile-summary { display: block; }
-                }
-              `}</style>
-
               {caveatedResult && (
-                <div style={{ border: "1px solid #5a4a30", borderRadius: 8, padding: 16, marginBottom: 20, background: "#1a1508" }}>
-                  <p style={{ color: "#c8b870", margin: 0, fontSize: "14px" }}>
+                <div style={{ border: "0.5px solid var(--prox-bronze)", borderRadius: 8, padding: 16, marginBottom: 20, background: "var(--prox-surface)" }}>
+                  <p style={{ color: "var(--prox-bronze)", margin: 0, fontSize: "14px" }}>
                     <strong>Important context:</strong> Based on your answers, one or more underlying
                     health conditions or caregiving demands are likely affecting your sleep. The pattern
                     below is a starting point — but we'd recommend discussing these results with your
@@ -989,17 +1028,17 @@ function App() {
                 const primaryCap = primaryKey ? (CAPS[primaryKey] || 1) : 1;
                 const primaryPct = Math.round((primaryScore / primaryCap) * 100);
                 const signalStrength = primaryPct >= 70 ? "Strong signal — address first" : primaryPct >= 40 ? "Moderate signal" : primaryPct >= 20 ? "Contributing factor" : "Minor signal";
-                const signalBg = primaryPct >= 70 ? "#C4512A" : primaryPct >= 40 ? "#7a3a20" : primaryPct >= 20 ? "#3a2518" : "#2a2018";
+                const signalBg = primaryPct >= 70 ? "var(--prox-terra)" : primaryPct >= 40 ? "var(--prox-bronze)" : "var(--prox-muted)";
 
                 const sortedScores = Object.entries(result.scores || {})
-                  .map(([key, score]) => ({ key, score, pct: Math.round((score / (CAPS[key] || 1)) * 100) }))
+                  .map(([key, score]) => ({ key, score, pct: Math.min(Math.round((score / (CAPS[key] || 1)) * 100), 100) }))
                   .sort((a, b) => b.pct - a.pct);
 
                 const barColor = (pct) => {
-                  if (pct >= 70) return "#C4512A";
-                  if (pct >= 40) return "#888";
-                  if (pct >= 20) return "#555";
-                  return "#333";
+                  if (pct >= 70) return "var(--prox-terra)";
+                  if (pct >= 40) return "var(--prox-bronze)";
+                  if (pct >= 20) return "var(--prox-muted)";
+                  return "var(--prox-pale)";
                 };
 
                 const FLAG_META = {
@@ -1023,17 +1062,15 @@ function App() {
                       {/* Section 1 — Primary driver badge */}
                       {primaryKey && (
                         <div style={{ marginBottom: 20 }}>
-                          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#8a8278", marginBottom: 8 }}>
-                            Primary driver
-                          </div>
-                          <div style={{ background: "#1e1208", border: "1px solid #C4512A", borderRadius: 7, padding: "10px 14px" }}>
-                            <div style={{ color: "#C4512A", fontWeight: 600, fontSize: "13px", marginBottom: 6 }}>
+                          <div className="prox-label">Primary driver</div>
+                          <div style={{ background: "var(--prox-surface)", border: "0.5px solid var(--prox-pale)", borderRadius: 8, padding: "10px 14px" }}>
+                            <div style={{ color: "var(--prox-terra)", fontWeight: 700, fontFamily: "'Inter', sans-serif", fontSize: "13px", marginBottom: 6 }}>
                               {MECHANISMS[primaryKey]?.label || primaryKey}
                             </div>
                             <div style={{
                               display: "inline-block",
                               background: signalBg,
-                              color: "#f0ebe3",
+                              color: "var(--prox-stone)",
                               fontSize: "11px",
                               padding: "2px 8px",
                               borderRadius: 4,
@@ -1047,72 +1084,45 @@ function App() {
 
                       {/* Section 2 — All signals bar chart */}
                       <div style={{ marginBottom: 20 }}>
-                        <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#8a8278", marginBottom: 10 }}>
-                          All signals
-                        </div>
+                        <div className="prox-label">All signals</div>
                         {sortedScores.map(({ key, pct }) => (
                           <div key={key} style={{ marginBottom: 7 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              <span style={{ fontSize: "11px", color: pct < 15 ? "#4a4540" : "#8a8278", width: 84, flexShrink: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              <span style={{ fontSize: "11px", color: pct < 15 ? "var(--prox-pale)" : "var(--prox-muted)", width: 84, flexShrink: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                 {MECHANISMS[key]?.shortName || key}
                               </span>
-                              <div style={{ flex: 1, height: 5, background: "#1e1a14", borderRadius: 3, overflow: "hidden" }}>
+                              <div style={{ flex: 1, height: 5, background: "var(--prox-pale)", borderRadius: 3, overflow: "hidden" }}>
                                 <div style={{ width: `${pct}%`, height: "100%", background: barColor(pct), borderRadius: 3 }} />
                               </div>
-                              <span style={{ fontSize: "10px", color: pct < 15 ? "#4a4540" : "#6a6258", width: 28, textAlign: "right", flexShrink: 0 }}>
-                                {pct}%
+                              <span className="nrs-score-label" style={{ fontSize: "10px", color: pct < 15 ? "var(--prox-pale)" : "var(--prox-muted)", width: 52, textAlign: "right", flexShrink: 0, fontFamily: "'DM Mono', monospace", whiteSpace: "nowrap" }}>
+                                {pct} / 100
+                              </span>
+                              <span className="nrs-bar-signal" style={{ fontSize: "10px", color: barColor(pct), flexShrink: 0, whiteSpace: "nowrap" }}>
+                                {pct >= 70 ? "Strong signal" : pct >= 40 ? "Moderate signal" : "Mild signal"}
                               </span>
                             </div>
                           </div>
                         ))}
                       </div>
 
-                      {/* Legend — How to read this */}
-                      <div style={{ marginBottom: 20 }}>
-                        <button
-                          onClick={() => setLegendOpen(o => !o)}
-                          style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "#6a6258", fontSize: "11px", fontFamily: "inherit" }}
-                        >
-                          How to read this {legendOpen ? "↑" : "↓"}
-                        </button>
-                        {legendOpen && (
-                          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                            {[
-                              { color: "#C4512A", tier: "Strong (70%+)",       note: "clear pattern, address first" },
-                              { color: "#888",    tier: "Moderate (40–70%)",   note: "real signal, address after primary" },
-                              { color: "#555",    tier: "Contributing (20–40%)", note: "present but not dominant" },
-                              { color: "#333",    tier: "Noise (under 20%)",   note: "weak signal, may resolve on its own" },
-                            ].map(({ color, tier, note }) => (
-                              <div key={tier} style={{ display: "flex", alignItems: "flex-start", gap: 7 }}>
-                                <div style={{ width: 7, height: 7, borderRadius: "50%", background: color, flexShrink: 0, marginTop: 2 }} />
-                                <span style={{ fontSize: "11px", lineHeight: 1.4, color: "#6a6258" }}>
-                                  <span style={{ fontWeight: 600, color: "#8a8278" }}>{tier}</span>
-                                  {" — "}{note}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+
 
                       {/* Section 3 — Flags */}
                       {visibleFlags.length > 0 && (
                         <div style={{ marginBottom: 20 }}>
-                          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#8a8278", marginBottom: 8 }}>
-                            Flags
-                          </div>
+                          <div className="prox-label">Flags</div>
                           {visibleFlags.map(flag => (
                             <div key={flag} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 6 }}>
                               <div style={{ width: 8, height: 8, borderRadius: "50%", background: FLAG_META[flag].dot, flexShrink: 0, marginTop: 3 }} />
-                              <span style={{ fontSize: "12px", color: "#b0a89e", lineHeight: 1.4 }}>{FLAG_META[flag].label}</span>
+                              <span style={{ fontSize: "12px", color: "var(--prox-muted)", lineHeight: 1.4 }}>{FLAG_META[flag].label}</span>
                             </div>
                           ))}
                         </div>
                       )}
 
                       {/* Footer */}
-                      <div style={{ fontSize: "11px", color: "#4a4540", lineHeight: 1.5, borderTop: "1px solid #2a2520", paddingTop: 12 }}>
-                        Based on your answers — not a diagnosis.
+                      <div style={{ fontSize: "11px", color: "var(--prox-muted)", lineHeight: 1.5, borderTop: "0.5px solid var(--prox-pale)", paddingTop: 12 }}>
+                        Your personal sleep pattern — based on your answers
                       </div>
                     </aside>
 
@@ -1124,30 +1134,31 @@ function App() {
                         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                           {sortedScores.slice(0, 3).map(({ key, pct }, i) => (
                             <div key={key} style={{
-                              background: i === 0 ? "#C4512A" : "#2a2520",
-                              color: "#f0ebe3",
+                              background: i === 0 ? "var(--prox-terra)" : "var(--prox-pale)",
+                              color: i === 0 ? "var(--prox-stone)" : "var(--prox-forest)",
                               fontSize: "12px",
                               padding: "4px 10px",
-                              borderRadius: 4,
-                              fontWeight: i === 0 ? 600 : 400,
+                              borderRadius: 20,
+                              fontFamily: "'DM Sans', sans-serif",
+                              fontWeight: i === 0 ? 700 : 400,
                             }}>
-                              {MECHANISMS[key]?.shortName || key} {pct}%
+                              {MECHANISMS[key]?.shortName || key} {pct} out of 100
                             </div>
                           ))}
                         </div>
                       </div>
 
                       {primary && (
-                        <div style={{ border: "1px solid #ddd", borderRadius: 8, padding: 16, marginBottom: 16 }}>
-                          <h3>{primary.label}</h3>
-                          <p>{primary.explanation} Addressing your primary driver often reduces the secondary signals — they're frequently downstream effects rather than independent problems.</p>
-                          <h4>What this suggests in your case</h4>
-                          <ul>
+                        <div style={{ border: "0.5px solid var(--prox-pale)", borderRadius: 8, padding: 16, marginBottom: 16, background: "var(--prox-surface)" }}>
+                          <h3 style={{ color: "var(--prox-forest)" }}>{primary.label}</h3>
+                          <p style={{ color: "var(--prox-body)" }}>{primary.explanation} Addressing your primary driver often reduces the secondary signals — they're frequently downstream effects rather than independent problems.</p>
+                          <h4 style={{ color: "var(--prox-forest)" }}>What this suggests in your case</h4>
+                          <ul style={{ color: "var(--prox-body)" }}>
                             {primary.behaviours.map((b) => (
                               <li key={b}>{b}</li>
                             ))}
                           </ul>
-                          <p>
+                          <p style={{ color: "var(--prox-body)" }}>
                             <strong>When to talk to your doctor:</strong>{" "}
                             {primary.doctorTrigger}
                           </p>
@@ -1155,23 +1166,23 @@ function App() {
                       )}
 
                       {secondary && (
-                        <div style={{ border: "1px solid #eee", borderRadius: 8, padding: 16, marginBottom: 16 }}>
-                          <h4>Secondary pattern to watch: {secondary.shortName}</h4>
-                          <p>{secondary.explanation}</p>
+                        <div style={{ border: "0.5px solid var(--prox-pale)", borderRadius: 8, padding: 16, marginBottom: 16, background: "var(--prox-surface)" }}>
+                          <h4 style={{ color: "var(--prox-forest)" }}>Secondary pattern to watch: {secondary.shortName}</h4>
+                          <p style={{ color: "var(--prox-body)" }}>{secondary.explanation}</p>
                         </div>
                       )}
 
                       {/* ── EMAIL CAPTURE ── */}
                       {primaryKey && (
-                        <div style={{ border: "1px solid #2a2520", borderRadius: 8, padding: "20px 24px", marginBottom: 16, background: "#110f0c" }}>
+                        <div style={{ border: "0.5px solid var(--prox-pale)", borderRadius: 8, padding: "20px 24px", marginBottom: 16, background: "var(--prox-surface)" }}>
                           {emailStatus === "success" ? (
-                            <p style={{ color: "#b0a89e", margin: 0 }}>Your plan is on its way.</p>
+                            <p style={{ color: "var(--prox-muted)", margin: 0 }}>Your plan is on its way.</p>
                           ) : (
                             <>
-                              <h3 style={{ color: "#f0ebe3", marginTop: 0, marginBottom: 6, fontSize: "17px" }}>
+                              <h3 style={{ color: "var(--prox-forest)", marginTop: 0, marginBottom: 6, fontSize: "17px" }}>
                                 Your personalised action plan is ready
                               </h3>
-                              <p style={{ color: "#8a8278", margin: "0 0 16px", fontSize: "14px" }}>
+                              <p style={{ color: "var(--prox-muted)", margin: "0 0 16px", fontSize: "14px" }}>
                                 Specific fixes for this root cause — nothing else.
                               </p>
                               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -1184,13 +1195,13 @@ function App() {
                                   style={{
                                     flex: 1,
                                     minWidth: 180,
-                                    background: "#1e1a14",
-                                    border: "1px solid #3a3530",
-                                    borderRadius: 6,
+                                    background: "var(--prox-stone)",
+                                    border: "0.5px solid var(--prox-pale)",
+                                    borderRadius: 8,
                                     padding: "10px 14px",
-                                    color: "#f0ebe3",
+                                    color: "var(--prox-forest)",
                                     fontSize: "14px",
-                                    fontFamily: "inherit",
+                                    fontFamily: "'DM Sans', sans-serif",
                                     outline: "none",
                                   }}
                                 />
@@ -1198,14 +1209,16 @@ function App() {
                                   onClick={() => handleEmailSubmit(result.primaryMechanism)}
                                   disabled={!emailInput || emailStatus === "submitting"}
                                   style={{
-                                    background: emailInput ? "#C4512A" : "#3a2518",
-                                    color: "#f0ebe3",
+                                    background: "var(--prox-forest)",
+                                    color: "var(--prox-stone)",
                                     border: "none",
-                                    borderRadius: 6,
+                                    borderRadius: 8,
                                     padding: "10px 18px",
                                     fontSize: "14px",
-                                    fontFamily: "inherit",
+                                    fontFamily: "'DM Sans', sans-serif",
+                                    fontWeight: 500,
                                     cursor: emailInput ? "pointer" : "not-allowed",
+                                    opacity: emailInput ? 1 : 0.4,
                                     whiteSpace: "nowrap",
                                   }}
                                 >
@@ -1213,11 +1226,11 @@ function App() {
                                 </button>
                               </div>
                               {emailStatus === "error" && (
-                                <p style={{ color: "#e57373", fontSize: "13px", marginTop: 10, marginBottom: 0 }}>
+                                <p style={{ color: "var(--prox-terra)", fontSize: "13px", marginTop: 10, marginBottom: 0 }}>
                                   Something went wrong — try again.
                                 </p>
                               )}
-                              <p style={{ color: "#4a4540", fontSize: "12px", marginTop: 10, marginBottom: 0 }}>
+                              <p style={{ color: "var(--prox-muted)", fontSize: "12px", marginTop: 10, marginBottom: 0 }}>
                                 No generic advice. No spam.
                               </p>
                             </>
@@ -1226,7 +1239,7 @@ function App() {
                       )}
 
                       {result.sleep_restriction && (
-                        <p style={{ color: "#b0a89e", fontSize: "13px" }}>
+                        <p style={{ color: "var(--prox-muted)", fontSize: "13px" }}>
                           There is also a strong sleep‑restriction signal (time in bed under 6.5 hours most nights).
                         </p>
                       )}
@@ -1237,23 +1250,35 @@ function App() {
             </>
           )}
 
-          {!result.showCrisisGate && <button onClick={handleRestart} style={{ marginTop: 16 }}>
-            Restart quiz
-          </button>}
+          {!result.showCrisisGate && (
+            <button
+              onClick={handleRestart}
+              style={{
+                marginTop: 16,
+                background: "transparent",
+                color: "var(--prox-muted)",
+                border: "0.5px solid var(--prox-pale)",
+                padding: "8px 16px",
+                borderRadius: "8px",
+                fontSize: "13px",
+                fontFamily: "'DM Sans', sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              Restart quiz
+            </button>
+          )}
         </div>
       )}
 
     {!result && (
-  <>
-    <h2
-      style={{
-        fontSize: "16px",
-        marginBottom: "8px",
-        color: "#f0ebe3",
-      }}
-    >
-      {current.label}
-    </h2>
+  <div className="prox-card">
+    {/* Progress bar */}
+    <div className="prox-progress-track">
+      <div className="prox-progress-fill" style={{ width: `${progressPct}%` }} />
+    </div>
+
+    <h2 className="prox-question">{current.label}</h2>
 
     {current.type === "text" ? (
       <textarea
@@ -1264,14 +1289,16 @@ function App() {
         style={{
           marginTop: "14px",
           width: "100%",
-          background: "#141210",
-          border: "1px solid #2a2520",
-          borderRadius: "7px",
+          background: "var(--prox-stone)",
+          border: "0.5px solid var(--prox-pale)",
+          borderRadius: "8px",
           padding: "11px 16px",
-          color: "#f0ebe3",
+          color: "var(--prox-forest)",
           fontSize: "14px",
+          fontFamily: "'DM Sans', sans-serif",
           resize: "vertical",
           boxSizing: "border-box",
+          outline: "none",
         }}
       />
     ) : (
@@ -1283,18 +1310,18 @@ function App() {
       />
     )}
 
-    <div style={{ marginTop: 16 }}>
+    <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
       {currentIndex > 0 && (
         <button
           onClick={handleBack}
           style={{
-            marginRight: 8,
             background: "transparent",
-            color: "#b0a89e",
-            border: "1px solid #3a3530",
+            color: "var(--prox-muted)",
+            border: "0.5px solid var(--prox-pale)",
             padding: "8px 16px",
-            borderRadius: "4px",
+            borderRadius: "8px",
             fontSize: "13px",
+            fontFamily: "'DM Sans', sans-serif",
             cursor: "pointer",
           }}
         >
@@ -1304,31 +1331,13 @@ function App() {
       <button
         onClick={handleNext}
         disabled={!canGoNext()}
-        onMouseOver={(e) =>
-          (e.currentTarget.style.background = "#ae4825")
-        }
-        onMouseOut={(e) =>
-          (e.currentTarget.style.background = "#C4512A")
-        }
-        style={{
-          background: "#C4512A",
-          color: "#f0ebe3",
-          border: "none",
-          padding: "10px 22px",
-          borderRadius: "5px",
-          fontSize: "13px",
-          fontFamily: "'IBM Plex Sans', sans-serif",
-          fontWeight: 500,
-          cursor: canGoNext() ? "pointer" : "not-allowed",
-          opacity: canGoNext() ? 1 : 0.4,
-          letterSpacing: "0.02em",
-          transition: "background .15s",
-        }}
+        className="prox-cta"
+        style={{ marginTop: 0, flex: 1 }}
       >
-        {currentIndex === QUESTIONS.length - 1 ? "See your pattern →" : "Next →"}
+        {currentIndex === QUESTIONS.length - 1 ? "See your pattern →" : "Continue →"}
       </button>
     </div>
-  </>
+  </div>
 )}
 
     </div>

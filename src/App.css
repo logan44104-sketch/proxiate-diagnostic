@@ -1,38 +1,163 @@
-.App {
-  text-align: center;
+/* ── Quiz card ── */
+.prox-card {
+  background: var(--prox-surface);
+  border: 0.5px solid var(--prox-pale);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 560px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* ── Progress bar ── */
+.prox-progress-track {
+  height: 3px;
+  background: var(--prox-pale);
+  border-radius: 99px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.prox-progress-fill {
+  height: 100%;
+  background: var(--prox-terra);
+  border-radius: 99px;
+  transition: width 0.3s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ── Category pill ── */
+.prox-pill {
+  display: inline-block;
+  background: var(--prox-pale);
+  color: var(--prox-forest);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin-bottom: 14px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ── Question text ── */
+.prox-question {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--prox-forest);
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+/* ── Sub-text ── */
+.prox-subtext {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--prox-muted);
+  margin-bottom: 20px;
+}
+
+/* ── Answer options ── */
+.prox-options {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.prox-option {
+  width: 100%;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--prox-forest);
+  background: var(--prox-surface);
+  border: 1.5px solid var(--prox-pale);
+  border-radius: 8px;
+  padding: 13px 16px;
+  cursor: pointer;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 12px;
+  transition: border-color 0.15s, background 0.15s;
 }
 
-.App-link {
-  color: #61dafb;
+.prox-option.selected {
+  border-color: var(--prox-terra);
+  background: rgba(196, 81, 42, 0.08);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ── CTA button ── */
+.prox-cta {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--prox-stone);
+  background: var(--prox-forest);
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: opacity 0.15s;
+}
+
+.prox-cta:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Sidebar labels ── */
+.prox-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--prox-muted);
+  margin-bottom: 8px;
+}
+
+/* ── Results layout ── */
+.nrs-results-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+.nrs-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 24px;
+}
+.nrs-main {
+  flex: 1;
+  min-width: 0;
+}
+.nrs-mobile-summary {
+  display: none;
+  margin-bottom: 16px;
+}
+.nrs-bar-signal {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .nrs-results-layout { flex-direction: column; }
+  /* Show sidebar above main on mobile */
+  .nrs-sidebar {
+    display: block;
+    width: 100%;
+    position: static;
+    order: 2;
   }
-  to {
-    transform: rotate(360deg);
+  .nrs-main {
+    order: 1;
   }
+  /* Hide pill summary on mobile */
+  .nrs-mobile-summary { display: none; }
+  /* Hide numerical scores on mobile */
+  .nrs-score-label { display: none; }
+  /* Show text signal labels on mobile */
+  .nrs-bar-signal { display: inline; }
 }
