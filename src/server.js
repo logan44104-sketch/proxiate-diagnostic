@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "build")));
 
-const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY;
+const MAILERLITE_API_KEY = process.env.REACT_APP_MAILERLITE_API_KEY;
 
 const GROUP_IDS = {
   bucket_airway:      "182134540768117804",
