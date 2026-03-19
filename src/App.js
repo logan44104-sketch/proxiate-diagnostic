@@ -884,14 +884,7 @@ function App() {
     }
   };
 
-  const visibleQuestions = QUESTIONS.filter((_, i) => {
-    // count how many questions are visible up to and including current
-    let count = 0;
-    for (let j = 0; j <= i; j++) {
-      if (shouldShow(QUESTIONS[j])) count++;
-    }
-    return shouldShow(QUESTIONS[i]);
-  });
+  const visibleQuestions = QUESTIONS.filter((_, i) => shouldShow(QUESTIONS[i]));
   const totalVisible = visibleQuestions.length;
   const currentVisible = visibleQuestions.filter((_, i) =>
     QUESTIONS.indexOf(visibleQuestions[i]) <= currentIndex
