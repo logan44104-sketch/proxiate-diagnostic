@@ -886,7 +886,7 @@ function App() {
     const secondPattern = result.topMechanisms?.[1] || null;
     const payload = {
       email: emailInput,
-      bucket: `bucket_${result.topMechanisms?.[0] || primaryMechanism}`,
+      bucket: `bucket_${primaryMechanism === 'multiFactor' ? (result.topMechanisms?.[0] || primaryMechanism) : primaryMechanism}`,
       sex: answers.sex,
       top_pattern: MECHANISM_DISPLAY_NAMES[primaryMechanism] || primaryMechanism,
       pattern_score: primaryScore,
