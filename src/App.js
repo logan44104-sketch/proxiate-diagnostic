@@ -886,7 +886,7 @@ function App() {
     const secondPattern = result.topMechanisms?.[1] || null;
     const payload = {
       email: emailInput,
-      bucket: `bucket_${primaryMechanism}`,
+      bucket: `bucket_${result.topMechanisms?.[0] || primaryMechanism}`,
       sex: answers.sex,
       top_pattern: MECHANISM_DISPLAY_NAMES[primaryMechanism] || primaryMechanism,
       pattern_score: primaryScore,
