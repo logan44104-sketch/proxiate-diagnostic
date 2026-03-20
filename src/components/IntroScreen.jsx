@@ -21,16 +21,16 @@ export default function IntroScreen({ onStart }) {
         <div style={{ width: "0%", height: "100%", background: "var(--prox-terra)" }} />
       </div>
 
-      <div style={{ padding: "28px" }}>
+      <div style={{ padding: "52px 52px 48px" }}>
         {/* Hero */}
         <p
           style={{
             fontFamily: "'Inter', sans-serif",
             fontWeight: 700,
-            fontSize: "21px",
+            fontSize: "28px",
             color: "var(--prox-forest)",
-            lineHeight: 1.35,
-            margin: "0 0 20px",
+            lineHeight: 1.3,
+            margin: "0 0 32px",
           }}
         >
           Most tiredness has a specific cause. Most people never find it.
@@ -49,7 +49,7 @@ export default function IntroScreen({ onStart }) {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,
-              fontSize: "15px",
+              fontSize: "17px",
               color: "var(--prox-body)",
               lineHeight: 1.65,
               margin: 0,
@@ -63,7 +63,7 @@ export default function IntroScreen({ onStart }) {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,
-              fontSize: "15px",
+              fontSize: "17px",
               color: "var(--prox-body)",
               lineHeight: 1.65,
               margin: 0,
@@ -75,7 +75,7 @@ export default function IntroScreen({ onStart }) {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,
-              fontSize: "15px",
+              fontSize: "17px",
               color: "var(--prox-body)",
               lineHeight: 1.65,
               margin: 0,
