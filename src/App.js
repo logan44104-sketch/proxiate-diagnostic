@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import scoreNRSQuiz  from "./Lib/src/lib/nrsScoring";
 import { MECHANISMS, resolveMechanism } from "./config/mechanisms";
+import IntroScreen from "./components/IntroScreen";
 import "./App.css";
 
 const QUESTIONS = [
@@ -288,10 +289,6 @@ const QUESTIONS = [
         label: "Physical discomfort — pain, temperature, restless legs",
       },
       {
-        key: "wakeBackQuickly",
-        label: "I wake up briefly but fall back quickly",
-      },
-      {
         key: "heartPounding",
         label: "My heart is pounding or racing",
       },
@@ -300,16 +297,8 @@ const QUESTIONS = [
         label: "I feel anxious or on edge for no obvious reason",
       },
       {
-        key: "hungerBathroom",
-        label: "Hunger or needing the bathroom",
-      },
-      {
         key: "noise",
-        label: "Noise or light waking me",
-      },
-      {
-        key: "partnerWaking",
-        label: "My partner or someone else waking me",
+        label: "There's a noise I can't stop focusing on",
       },
       {
         key: "nothingSpecific",
@@ -744,6 +733,7 @@ function OptionButtons({ current, answers, onSingle, onMulti }) {
 // ...existing code (imports, QUESTIONS array)...
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [answers, setAnswers] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState(null);
@@ -974,7 +964,11 @@ function App() {
         }}
       >
 
-      {result && (
+      {showIntro && (
+        <IntroScreen onStart={() => setShowIntro(false)} />
+      )}
+
+      {!showIntro && result && (
         <div style={{ marginTop: 24 }}>
 
           {result.type === "hardStopPregnancy" && (
@@ -1033,7 +1027,7 @@ function App() {
               )}
 
               {(() => {
-                const CAPS = { airway: 50, circadian: 40, duration: 30, substances: 30, environment: 30, hormonal: 50, mind_stress: 40, mood: 30, movement: 35, systemic: 30 };
+                const CAPS = { airway: 64, circadian: 51, duration: 38, substances: 38, environment: 38, hormonal: 64, mind_stress: 51, mood: 38, movement: 44, systemic: 38 };
                 const primaryKey = result.topMechanisms?.[0];
                 const secondaryKey = result.topMechanisms?.[1];
                 const primary = primaryKey ? resolveMechanism(primaryKey, answers) : null;
@@ -1286,7 +1280,7 @@ function App() {
         </div>
       )}
 
-    {!result && (
+    {!showIntro && !result && (
   <div className="prox-card">
     {/* Progress bar */}
     <div className="prox-progress-track">
